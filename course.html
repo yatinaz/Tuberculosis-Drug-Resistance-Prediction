@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How This TB AI Works — Interactive Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-1:#FAF7F2;
+  --bg-2:#EDE8DF;
+  --bg-dark:#1E1E2E;
+  --accent:#D94F3D;
+  --accent-soft:#F5E6E3;
+  --text:#1A1714;
+  --text-muted:#6B6560;
+  --border:#DDD5C8;
+  --surface:#FFFFFF;
+  --surface-warm:#FDF9F5;
+  --kw:#CBA6F7;
+  --fn:#89B4FA;
+  --str:#A6E3A1;
+  --num:#FAB387;
+  --cmt:#6C7086;
+  --var:#CDD6F4;
+  --op:#89DCEB;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg-1);overflow-x:hidden}
+
+/* NAV */
+#top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+#progress-bar{height:3px;background:var(--accent);width:0%;transition:width 0.2s ease}
+#nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 32px;gap:16px}
+#nav-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:0.95rem;color:var(--text);white-space:nowrap}
+#nav-dots{display:flex;gap:8px;align-items:center}
+.nav-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--border);background:transparent;cursor:pointer;transition:all 0.3s ease;position:relative}
+.nav-dot.active{background:var(--accent);border-color:var(--accent)}
+.nav-dot:hover .dot-label{opacity:1;pointer-events:none}
+.dot-label{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:0.7rem;white-space:nowrap;padding:4px 8px;border-radius:6px;opacity:0;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;pointer-events:none}
+.dot-label::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--text)}
+
+/* MODULES */
+.module{min-height:100dvh;min-height:100vh;padding:100px 0 60px;display:flex;flex-direction:column;justify-content:center}
+.module:nth-child(odd){background:var(--bg-1)}
+.module:nth-child(even){background:var(--bg-2)}
+.module-inner{max-width:1100px;margin:0 auto;padding:0 32px;width:100%}
+
+/* TYPOGRAPHY */
+.module-label{font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+h1.hero-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(2.4rem,5vw,4rem);line-height:1.08;color:var(--text);margin-bottom:24px}
+h2.section-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(1.6rem,3vw,2.4rem);color:var(--text);margin-bottom:16px}
+h3.card-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:1.1rem;color:var(--text);margin-bottom:6px}
+p.body-text{font-size:1.05rem;line-height:1.7;color:var(--text-muted);max-width:680px}
+p.body-text+p.body-text{margin-top:12px}
+
+/* HERO STAT */
+.hero-stat{display:inline-flex;align-items:baseline;gap:12px;background:var(--accent-soft);border:1px solid rgba(217,79,61,0.2);border-radius:16px;padding:16px 28px;margin-bottom:32px}
+.hero-stat-num{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:3rem;color:var(--accent)}
+.hero-stat-label{font-size:1rem;color:var(--text-muted);font-weight:500}
+
+/* GRID HELPERS */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.two-col-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+@media(max-width:768px){.two-col,.two-col-3{grid-template-columns:1fr}}
+
+/* CARDS */
+.card{background:var(--surface-warm);border:1px solid var(--border);border-radius:16px;padding:24px;transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(26,23,20,0.08)}
+.card-icon{font-size:2rem;margin-bottom:12px}
+.card-desc{font-size:0.9rem;color:var(--text-muted);line-height:1.6;margin-top:6px}
+
+/* CODE BLOCKS */
+.code-translation{background:var(--bg-dark);border-radius:16px;overflow:hidden;margin:24px 0}
+.code-translation-header{display:flex;align-items:center;gap:8px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03)}
+.code-translation-header span{font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;color:#6C7086;text-transform:uppercase;letter-spacing:0.08em}
+.dot-red{width:12px;height:12px;border-radius:50%;background:#FF5F57}
+.dot-yellow{width:12px;height:12px;border-radius:50%;background:#FFBD2E}
+.dot-green{width:12px;height:12px;border-radius:50%;background:#28C840}
+.code-line-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:768px){.code-line-wrap{grid-template-columns:1fr}}
+.code-side{padding:20px}
+.code-side pre{font-family:'JetBrains Mono',monospace;font-size:0.82rem;line-height:1.8;white-space:pre-wrap;word-break:break-word;color:var(--var)}
+.english-side{padding:20px;border-left:1px solid rgba(255,255,255,0.06)}
+.en-line{display:flex;gap:10px;align-items:flex-start;padding:4px 0;min-height:2rem}
+.en-line .arrow{color:var(--accent);font-weight:700;flex-shrink:0;margin-top:2px}
+.en-line .text{font-size:0.85rem;color:#CDD6F4;line-height:1.6;font-family:'DM Sans',sans-serif}
+
+/* SYNTAX HIGHLIGHT */
+.kw{color:var(--kw)}
+.fn{color:var(--fn)}
+.str{color:var(--str)}
+.num{color:var(--num)}
+.cmt{color:var(--cmt);font-style:italic}
+.op{color:var(--op)}
+
+/* DATA FLOW ANIMATION */
+#data-flow{display:flex;flex-wrap:wrap;gap:0;align-items:center;margin:32px 0;position:relative}
+.flow-node{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text-muted);opacity:0.3;transform:translateY(8px);transition:opacity 0.5s ease,transform 0.5s ease,border-color 0.5s ease,color 0.5s ease;white-space:nowrap}
+.flow-node.lit{opacity:1;transform:translateY(0);border-color:var(--accent);color:var(--text)}
+.flow-arrow{color:var(--border);font-size:1.2rem;padding:0 4px;transition:color 0.5s}
+.flow-arrow.lit{color:var(--accent)}
+#flow-restart{margin-top:16px;background:transparent;border:1.5px solid var(--accent);color:var(--accent);font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.85rem;padding:8px 20px;border-radius:8px;cursor:pointer;transition:all 0.2s}
+#flow-restart:hover{background:var(--accent);color:#fff}
+
+/* QUIZ */
+.quiz-block{background:var(--surface-warm);border:1px solid var(--border);border-radius:20px;padding:28px;margin-top:32px}
+.quiz-q{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:1.05rem;color:var(--text);margin-bottom:20px;line-height:1.5}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-option{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-radius:12px;border:1.5px solid var(--border);cursor:pointer;transition:all 0.2s;background:var(--surface)}
+.quiz-option:hover{border-color:var(--accent);background:var(--accent-soft)}
+.quiz-option.correct{border-color:#40c980;background:#f0fff7;pointer-events:none}
+.quiz-option.wrong{border-color:#e05555;background:#fff0f0;pointer-events:none}
+.quiz-option.dimmed{opacity:0.45;pointer-events:none}
+.opt-letter{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.85rem;color:var(--accent);flex-shrink:0;margin-top:1px}
+.opt-text{font-size:0.92rem;color:var(--text);line-height:1.5}
+.quiz-explanation{margin-top:16px;padding:14px 18px;border-radius:10px;font-size:0.88rem;line-height:1.6;display:none}
+.quiz-explanation.show{display:block}
+.quiz-explanation.correct-exp{background:#f0fff7;border:1px solid #40c980;color:#1a5e38}
+.quiz-explanation.wrong-exp{background:#fff0f0;border:1px solid #e05555;color:#6b1515}
+
+/* GLOSSARY TOOLTIPS */
+.tt{border-bottom:1.5px dashed var(--accent);cursor:pointer;color:inherit;transition:color 0.15s}
+.tt:hover{color:var(--accent)}
+#tooltip-box{position:fixed;z-index:9999;background:var(--text);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.82rem;line-height:1.5;padding:10px 14px;border-radius:10px;max-width:280px;pointer-events:none;opacity:0;transition:opacity 0.15s;box-shadow:0 8px 32px rgba(0,0,0,0.25)}
+
+/* CHARACTER CARDS */
+.char-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0}
+.char-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:20px;transition:all 0.2s}
+.char-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,79,61,0.1)}
+.char-role{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.char-name{font-family:'JetBrains Mono',monospace;font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:8px;word-break:break-all}
+.char-desc{font-size:0.85rem;color:var(--text-muted);line-height:1.5}
+
+/* ARCH DIAGRAM */
+.arch-diagram{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center;margin:28px 0;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.arch-col{padding:24px;display:flex;flex-direction:column;gap:12px}
+.arch-col:last-child{background:var(--bg-2)}
+.arch-step{display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-muted)}
+.arch-step .icon{font-size:1rem}
+.arch-arrow-col{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;background:var(--accent-soft);border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.arch-arrow-col .json-badge{font-family:'JetBrains Mono',monospace;font-size:0.7rem;background:var(--accent);color:#fff;padding:4px 10px;border-radius:20px;white-space:nowrap;writing-mode:horizontal-tb}
+.arch-arrow-col .arrow-icon{font-size:1.4rem;color:var(--accent)}
+@media(max-width:640px){.arch-diagram{grid-template-columns:1fr;grid-template-rows:auto auto auto}}
+
+/* PATIENT TABLE */
+.patient-table{width:100%;border-collapse:collapse;font-size:0.85rem;margin:20px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.patient-table th{background:var(--text);color:#fff;padding:10px 14px;text-align:left;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:0.78rem}
+.patient-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:0.8rem}
+.patient-table tr:last-child td{border-bottom:none}
+.patient-table tr:nth-child(even) td{background:var(--bg-2)}
+.tag-res{color:#e05555;font-weight:600}
+.tag-sus{color:#40c980;font-weight:600}
+.tag-nt{color:var(--text-muted)}
+
+/* IMBALANCE BARS */
+.imbalance-vis{display:flex;flex-direction:column;gap:16px;margin:24px 0}
+.imb-row{display:flex;flex-direction:column;gap:6px}
+.imb-label{display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600}
+.imb-bars{display:flex;gap:6px;align-items:center;height:28px}
+.imb-bar{height:100%;border-radius:6px;transition:width 0.8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:0.75rem;font-weight:600;color:#fff;min-width:2px}
+.imb-bar.sus{background:#40c980}
+.imb-bar.res{background:var(--accent)}
+
+/* MODEL CARDS */
+.model-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+@media(max-width:640px){.model-grid{grid-template-columns:1fr}}
+.model-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:22px;transition:all 0.2s}
+.model-card:hover{border-color:var(--accent);box-shadow:0 6px 24px rgba(217,79,61,0.1)}
+.model-emoji{font-size:2rem;margin-bottom:10px}
+.model-nick{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.model-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:8px}
+.model-desc{font-size:0.85rem;color:var(--text-muted);line-height:1.55}
+
+/* GROUP CHAT */
+#group-chat{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px;margin:24px 0;min-height:280px;display:flex;flex-direction:column;gap:12px;position:relative}
+.chat-msg{display:flex;gap:10px;opacity:0;transform:translateY(12px);transition:opacity 0.4s ease,transform 0.4s ease;max-width:80%}
+.chat-msg.visible{opacity:1;transform:translateY(0)}
+.chat-msg.right{flex-direction:row-reverse;align-self:flex-end}
+.chat-msg.center{align-self:center;max-width:90%}
+.chat-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.chat-bubble{padding:10px 14px;border-radius:14px;font-size:0.85rem;line-height:1.55;font-family:'DM Sans',sans-serif}
+.chat-msg.left .chat-bubble{background:var(--bg-2);border-radius:4px 14px 14px 14px;color:var(--text)}
+.chat-msg.right .chat-bubble{background:#DCF8C6;border-radius:14px 4px 14px 14px;color:#1a1714}
+.chat-msg.center .chat-bubble{background:var(--accent-soft);border:1px solid rgba(217,79,61,0.25);border-radius:12px;color:var(--text);text-align:center;font-weight:600}
+.chat-msg.system-msg .chat-bubble{background:var(--bg-dark);color:var(--var);font-family:'JetBrains Mono',monospace;font-size:0.78rem;border-radius:8px;width:100%}
+.chat-msg.system-msg{max-width:100%}
+#chat-play-btn{background:var(--accent);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.88rem;padding:10px 24px;border-radius:10px;cursor:pointer;margin-top:8px;transition:all 0.2s;align-self:flex-start}
+#chat-play-btn:hover{background:#c0392b}
+
+/* AUROC VISUAL */
+.auroc-visual{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin:20px 0}
+.auroc-canvas-wrap{position:relative;width:100%;max-width:360px;margin:0 auto}
+canvas#auroc-canvas{width:100%;height:auto;display:block}
+.auroc-labels{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-top:8px;font-family:'DM Sans',sans-serif}
+
+/* THRESHOLD CARDS */
+.threshold-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+@media(max-width:640px){.threshold-grid{grid-template-columns:1fr}}
+.threshold-card{border-radius:16px;padding:20px;border:2px solid}
+.threshold-card.fn{border-color:#e05555;background:#fff5f5}
+.threshold-card.fp{border-color:#f59e0b;background:#fffbeb}
+.threshold-card-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1rem;margin-bottom:8px}
+.threshold-card.fn .threshold-card-title{color:#b91c1c}
+.threshold-card.fp .threshold-card-title{color:#b45309}
+.threshold-card p{font-size:0.85rem;line-height:1.55;color:var(--text-muted)}
+
+/* RESULTS TABLE */
+.results-cards{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+.result-row{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 20px}
+.result-drug{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.9rem;color:var(--text);min-width:60px}
+.result-spec-bar{flex:1;height:8px;border-radius:4px;background:var(--bg-2);overflow:hidden}
+.result-spec-fill{height:100%;border-radius:4px;background:var(--accent);transition:width 1s ease}
+.result-spec-label{font-size:0.85rem;font-weight:600;color:var(--text);min-width:40px;text-align:right}
+.result-verdict{font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.verdict-deploy{background:#dcfce7;color:#166534}
+.verdict-good{background:#fef9c3;color:#854d0e}
+.verdict-limited{background:#fee2e2;color:#991b1b}
+
+/* FIGURE CARDS */
+.figure-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+@media(max-width:640px){.figure-grid{grid-template-columns:1fr}}
+.figure-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:18px;transition:all 0.2s}
+.figure-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.figure-num{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent);font-weight:600;margin-bottom:6px}
+.figure-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:6px}
+.figure-subtitle{font-size:0.78rem;font-style:italic;color:var(--text-muted);margin-bottom:6px}
+.figure-desc{font-size:0.82rem;color:var(--text-muted);line-height:1.5}
+
+/* PIPELINE ANIMATION */
+#pipeline-anim{display:flex;align-items:center;gap:0;margin:24px 0;flex-wrap:nowrap;overflow-x:auto;padding:20px 0}
+.pipe-node{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text-muted);white-space:nowrap;position:relative;transition:all 0.5s ease}
+.pipe-node.active{border-color:var(--accent);color:var(--text);background:var(--accent-soft)}
+.pipe-packet{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--accent);opacity:0;transition:all 0.4s ease}
+.pipe-arrow{color:var(--border);padding:0 6px;font-size:1rem;flex-shrink:0;transition:color 0.4s}
+.pipe-arrow.active{color:var(--accent)}
+
+/* SECTION DIVIDERS */
+.section-gap{height:56px}
+.divider{height:1px;background:var(--border);margin:40px 0}
+
+/* SCROLL FADE */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* BADGE */
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:0.72rem;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:0.06em;border:1px solid rgba(217,79,61,0.2)}
+
+/* INLINE CODE */
+code{font-family:'JetBrains Mono',monospace;font-size:0.85em;background:var(--bg-2);padding:2px 6px;border-radius:5px;color:var(--text)}
+
+/* CONCLUSION BANNER */
+.conclusion-banner{background:var(--accent);border-radius:20px;padding:32px 40px;color:#fff;margin-top:32px}
+.conclusion-banner h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,2rem);margin-bottom:12px}
+.conclusion-banner p{font-size:1rem;line-height:1.7;opacity:0.9}
+
+/* SMOOTH SCROLL HINT */
+.scroll-hint{display:flex;align-items:center;gap:8px;margin-top:32px;font-size:0.82rem;color:var(--text-muted);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.scroll-hint svg{width:18px;height:18px;color:var(--accent)}
+</style>
+</head>
+<body>
+
+<!-- TOOLTIP BOX -->
+<div id="tooltip-box"></div>
+
+<!-- FIXED NAV -->
+<nav id="top-nav">
+  <div id="progress-bar"></div>
+  <div id="nav-inner">
+    <span id="nav-title">TB Drug Resistance · Interactive Course</span>
+    <div id="nav-dots">
+      <div class="nav-dot active" data-module="0"><span class="dot-label">What This AI Does</span></div>
+      <div class="nav-dot" data-module="1"><span class="dot-label">Meet the Cast</span></div>
+      <div class="nav-dot" data-module="2"><span class="dot-label">Patient Records</span></div>
+      <div class="nav-dot" data-module="3"><span class="dot-label">Training Day</span></div>
+      <div class="nav-dot" data-module="4"><span class="dot-label">Metrics</span></div>
+      <div class="nav-dot" data-module="5"><span class="dot-label">Visualizations</span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ MODULE 1 ═══ -->
+<section class="module" id="module-0">
+  <div class="module-inner">
+    <div class="module-label">Module 1 of 6</div>
+    <h1 class="hero-title">What This AI<br>Actually Does</h1>
+    <div class="hero-stat">
+      <span class="hero-stat-num">1.5M</span>
+      <span class="hero-stat-label">people killed by TB every year.<br>Drug resistance means medicine that should work, doesn't.</span>
+    </div>
+
+    <p class="body-text">This codebase trains <strong>44 AI models</strong> — 4 model types × 11 <span class="tt" data-term="drug">drugs</span> — using <span class="tt" data-term="cv">5-fold cross-validation</span> = 220 total model fits. All from one command: <code>python tb_pipeline.py</code></p>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Data Flow</h2>
+    <p class="body-text fade-in">Watch how raw <span class="tt" data-term="csv">CSV</span> patient data becomes a trained model and final charts:</p>
+    <div id="data-flow" class="fade-in">
+      <div class="flow-node" id="fn0">X_trainData_1.csv</div>
+      <div class="flow-arrow" id="fa0">→</div>
+      <div class="flow-node" id="fn1">Y_trainData_1.csv</div>
+      <div class="flow-arrow" id="fa1">→</div>
+      <div class="flow-node" id="fn2">load_data()</div>
+      <div class="flow-arrow" id="fa2">→</div>
+      <div class="flow-node" id="fn3">prepare_data() × 11 drugs</div>
+      <div class="flow-arrow" id="fa3">→</div>
+      <div class="flow-node" id="fn4">cross-validation × 5 folds</div>
+      <div class="flow-arrow" id="fa4">→</div>
+      <div class="flow-node" id="fn5">model.fit() × 4 models</div>
+      <div class="flow-arrow" id="fa5">→</div>
+      <div class="flow-node" id="fn6">calculate_metrics()</div>
+      <div class="flow-arrow" id="fa6">→</div>
+      <div class="flow-node" id="fn7">model_results.json</div>
+      <div class="flow-arrow" id="fa7">→</div>
+      <div class="flow-node" id="fn8">generate_visualisations.py</div>
+      <div class="flow-arrow" id="fa8">→</div>
+      <div class="flow-node" id="fn9">figures/*.png</div>
+    </div>
+    <button id="flow-restart">↺ Replay animation</button>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Code ↔ English</h2>
+    <p class="body-text fade-in">The main loop in <code>tb_pipeline.py</code> lines 323–329:</p>
+    <div class="code-translation fade-in">
+      <div class="code-translation-header">
+        <div class="dot-red"></div><div class="dot-yellow"></div><div class="dot-green"></div>
+        <span style="margin-left:8px">tb_pipeline.py — main loop</span>
+      </div>
+      <div class="code-line-wrap">
+        <div class="code-side">
+          <pre><span class="kw">for</span> drug <span class="kw">in</span> DRUGS:
+    class_distributions[drug] = <span class="fn">get_class_distribution</span>(df_y, drug)
+    drug_results = <span class="fn">train_and_evaluate_drug</span>(df_X, df_y, drug, cv)
+    all_results[drug] = drug_results</pre>
+        </div>
+        <div class="english-side">
+          <div class="en-line"><span class="arrow">→</span><span class="text">For each of the 11 anti-TB <span class="tt" data-term="drug">drugs</span> (RIF, INH, PZA...)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Count how many resistant vs susceptible patients we have for this drug</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Train all 4 AI <span class="tt" data-term="model">models</span> and score them — this is the heavy lifting</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Save the scores in a <span class="tt" data-term="dict">dictionary</span> keyed by drug name</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ 1 -->
+    <div class="quiz-block fade-in">
+      <div class="quiz-q">🧩 Quiz: You want to add a 12th drug called 'NEW' to the pipeline. Your AI assistant adds it to the <code>DRUGS</code> list but forgets to add it to <code>DRUG_INFO</code>. What happens?</div>
+      <div class="quiz-options" data-quiz="q1">
+        <div class="quiz-option" data-correct="false" data-exp="DRUGS list controls the loop — not CSV loading. The CSV loads fine." >
+          <span class="opt-letter">A</span><span class="opt-text">The CSV loading fails immediately</span>
+        </div>
+        <div class="quiz-option" data-correct="true" data-exp="Correct! The loop runs for NEW but crashes when code tries to look up DRUG_INFO['NEW']['full_name'] inside train_and_evaluate_drug().">
+          <span class="opt-letter">B</span><span class="opt-text">The loop runs for NEW but crashes when code tries to look up <code>DRUG_INFO['NEW']['full_name']</code></span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="DRUG_INFO is not optional — it's accessed inside train_and_evaluate_drug() for clinical context.">
+          <span class="opt-letter">C</span><span class="opt-text">Nothing breaks — DRUG_INFO is optional</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="JSON only fails to write if the data is unserializable — a KeyError happens long before JSON writing.">
+          <span class="opt-letter">D</span><span class="opt-text">The JSON file becomes unreadable</span>
+        </div>
+      </div>
+      <div class="quiz-explanation" id="q1-exp"></div>
+    </div>
+
+    <div class="scroll-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Scroll to Module 2
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ MODULE 2 ═══ -->
+<section class="module" id="module-1">
+  <div class="module-inner">
+    <div class="module-label">Module 2 of 6</div>
+    <h2 class="section-title">Meet the Cast</h2>
+    <p class="body-text">Five files. Each has a distinct job. None of them step on each other's toes.</p>
+
+    <div class="char-grid fade-in">
+      <div class="char-card">
+        <div class="char-role">The AI Trainer</div>
+        <div class="char-name">tb_pipeline.py</div>
+        <div class="char-desc">Reads DNA data, trains 220 <span class="tt" data-term="model">models</span>, scores everything, saves the report card. The heavy-lifter.</div>
+      </div>
+      <div class="char-card">
+        <div class="char-role">The Chart Artist</div>
+        <div class="char-name">generate_visualisations.py</div>
+        <div class="char-desc">Never touches raw data. Only reads the report card. Draws 7 publication-quality figures.</div>
+      </div>
+      <div class="char-card">
+        <div class="char-role">The Patient Archives</div>
+        <div class="char-name">X_trainData_1.csv<br>Y_trainData_1.csv</div>
+        <div class="char-desc">3,393 bacterial <span class="tt" data-term="dna">DNA</span> profiles with resistance labels for 11 drugs. Read-only input — never modified.</div>
+      </div>
+      <div class="char-card">
+        <div class="char-role">The Report Card</div>
+        <div class="char-name">results/model_results.json</div>
+        <div class="char-desc">The handoff file. <code>tb_pipeline.py</code> writes it. <code>generate_visualisations.py</code> reads it. The interface between the two scripts.</div>
+      </div>
+      <div class="char-card">
+        <div class="char-role">The Gallery</div>
+        <div class="char-name">figures/</div>
+        <div class="char-desc">9 PNG files, each a different view of what the models learned. Pure output — never read back in.</div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Architecture at a Glance</h2>
+    <div class="arch-diagram fade-in">
+      <div class="arch-col">
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1rem;margin-bottom:8px">tb_pipeline.py</div>
+        <div class="arch-step"><span class="icon">📂</span> Reads X_trainData_1.csv</div>
+        <div class="arch-step"><span class="icon">📂</span> Reads Y_trainData_1.csv</div>
+        <div class="arch-step"><span class="icon">🧠</span> Trains 220 models</div>
+        <div class="arch-step"><span class="icon">📊</span> Calculates metrics</div>
+        <div class="arch-step"><span class="icon">💾</span> <strong>Writes model_results.json</strong></div>
+      </div>
+      <div class="arch-arrow-col">
+        <div class="json-badge">model_results.json</div>
+        <div class="arrow-icon">→</div>
+        <div style="font-size:0.7rem;color:var(--accent);font-weight:600;text-align:center;margin-top:4px">handoff</div>
+      </div>
+      <div class="arch-col">
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1rem;margin-bottom:8px">generate_visualisations.py</div>
+        <div class="arch-step"><span class="icon">📖</span> <strong>Reads model_results.json</strong></div>
+        <div class="arch-step"><span class="icon">🎨</span> Builds 7 figures</div>
+        <div class="arch-step"><span class="icon">🖼️</span> Writes figures/01_class_imbalance.png</div>
+        <div class="arch-step"><span class="icon">🖼️</span> Writes figures/02_auroc_heatmap.png</div>
+        <div class="arch-step"><span class="icon">🖼️</span> Writes figures/03_roc_curves.png …</div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Code ↔ English</h2>
+    <p class="body-text fade-in"><code>load_results()</code> from <code>generate_visualisations.py</code> lines 44–48:</p>
+    <div class="code-translation fade-in">
+      <div class="code-translation-header">
+        <div class="dot-red"></div><div class="dot-yellow"></div><div class="dot-green"></div>
+        <span style="margin-left:8px">generate_visualisations.py — load_results()</span>
+      </div>
+      <div class="code-line-wrap">
+        <div class="code-side">
+          <pre><span class="kw">def</span> <span class="fn">load_results</span>():
+    <span class="str">"""Load model results from JSON."""</span>
+    <span class="kw">with</span> <span class="fn">open</span>(RESULTS_DIR / <span class="str">'model_results.json'</span>, <span class="str">'r'</span>) <span class="kw">as</span> f:
+        data = json.<span class="fn">load</span>(f)
+    <span class="kw">return</span> data[<span class="str">'drug_results'</span>], data[<span class="str">'class_distributions'</span>]</pre>
+        </div>
+        <div class="english-side">
+          <div class="en-line"><span class="arrow">→</span><span class="text">Define a <span class="tt" data-term="function">function</span> called load_results</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">The docstring — a human-readable description of what this does</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Open the report card file for reading (the 'r' means read-only)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Parse the <span class="tt" data-term="json">JSON</span> file into a <span class="tt" data-term="python">Python</span> dictionary</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Hand back two things: the model scores, and the patient counts per drug</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ 2 -->
+    <div class="quiz-block fade-in">
+      <div class="quiz-q">🧩 Quiz: The AUROC heatmap figure looks wrong — all values show 0.500 instead of 0.99. Which file is the culprit, and why?</div>
+      <div class="quiz-options" data-quiz="q2">
+        <div class="quiz-option" data-correct="false" data-exp="generate_visualisations.py only reads data — it can't invent wrong values. It faithfully plots whatever is in the JSON.">
+          <span class="opt-letter">A</span><span class="opt-text">generate_visualisations.py — that's where the heatmap is drawn</span>
+        </div>
+        <div class="quiz-option" data-correct="true" data-exp="Correct! tb_pipeline.py is where AUROC is calculated and saved to JSON. If that computation is broken, the JSON stores 0.500, and the chart faithfully plots that.">
+          <span class="opt-letter">B</span><span class="opt-text">tb_pipeline.py — that's where AUROC is calculated and saved to JSON</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="model_results.json is an output file, not a source of logic. It only contains what tb_pipeline.py wrote.">
+          <span class="opt-letter">C</span><span class="opt-text">model_results.json — directly corrupt the file</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="Bad input data would give random AUROCs, not all exactly 0.500. A flat 0.5 means the model is guessing randomly — a logic bug.">
+          <span class="opt-letter">D</span><span class="opt-text">X_trainData_1.csv — bad input data</span>
+        </div>
+      </div>
+      <div class="quiz-explanation" id="q2-exp"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ MODULE 3 ═══ -->
+<section class="module" id="module-2">
+  <div class="module-inner">
+    <div class="module-label">Module 3 of 6</div>
+    <h2 class="section-title">The Patient Records<br>— DNA as Binary Data</h2>
+    <p class="body-text">Imagine a blood bank with <strong>3,393 vials</strong>. Each vial has <strong>222 test results</strong> — each either positive (<code>1</code>) or negative (<code>0</code>). A <span class="tt" data-term="snp">SNP</span> mutation is present or absent. That's it. Binary. Clean. Some vials don't have a resistance label for a particular drug — they're marked <code>-1</code> ("not tested"). Before training, we throw those unlabeled vials out.</p>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">What the Data Looks Like</h2>
+    <div class="fade-in" style="overflow-x:auto">
+      <table class="patient-table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>katG_S315T</th>
+            <th>rpoB_S450L</th>
+            <th>embB_M306I</th>
+            <th>…</th>
+            <th>INH label</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TB-001</td><td>1</td><td>0</td><td>0</td><td>…</td><td><span class="tag-res">1 (resistant)</span></td>
+          </tr>
+          <tr>
+            <td>TB-002</td><td>0</td><td>1</td><td>1</td><td>…</td><td><span class="tag-sus">0 (susceptible)</span></td>
+          </tr>
+          <tr>
+            <td>TB-003</td><td>1</td><td>0</td><td>0</td><td>…</td><td><span class="tag-nt">-1 (not tested)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="body-text fade-in" style="margin-top:12px">Each column is a <span class="tt" data-term="snp">SNP</span> or <span class="tt" data-term="indel">indel</span> — a specific mutation at a specific position in the bacterium's <span class="tt" data-term="dna">genome</span>. 222 columns × 3,393 rows = 752,646 individual data points.</p>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Class Imbalance — Why it Matters</h2>
+    <p class="body-text fade-in">The <span class="tt" data-term="imbalance">class imbalance</span> varies dramatically by drug. OFLX is severely skewed. RIF is more balanced.</p>
+
+    <div class="imbalance-vis fade-in" id="imb-vis">
+      <div class="imb-row">
+        <div class="imb-label">
+          <span style="color:#40c980;font-weight:700">OFLX</span>
+          <span style="color:var(--text-muted);font-size:0.78rem">87 susceptible vs 603 resistant = <strong>6.9× imbalance</strong></span>
+        </div>
+        <div class="imb-bars">
+          <div class="imb-bar sus" style="width:0%" data-target="12.6%">87</div>
+          <div class="imb-bar res" style="width:0%" data-target="87.4%">603</div>
+        </div>
+      </div>
+      <div class="imb-row">
+        <div class="imb-label">
+          <span style="color:#40c980;font-weight:700">RIF</span>
+          <span style="color:var(--text-muted);font-size:0.78rem">1,278 susceptible vs 2,057 resistant = <strong>more balanced</strong></span>
+        </div>
+        <div class="imb-bars">
+          <div class="imb-bar sus" style="width:0%" data-target="38.3%">1,278</div>
+          <div class="imb-bar res" style="width:0%" data-target="61.7%">2,057</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Code ↔ English</h2>
+    <p class="body-text fade-in"><code>prepare_data()</code> filtering from <code>tb_pipeline.py</code> lines 68–83:</p>
+    <div class="code-translation fade-in">
+      <div class="code-translation-header">
+        <div class="dot-red"></div><div class="dot-yellow"></div><div class="dot-green"></div>
+        <span style="margin-left:8px">tb_pipeline.py — prepare_data()</span>
+      </div>
+      <div class="code-line-wrap">
+        <div class="code-side">
+          <pre>res = pd.<span class="fn">concat</span>([df_X, df_y[[drug]]], axis=<span class="num">1</span>)
+res = res[res[drug] != <span class="num">-1</span>]
+y = res[drug].values
+X = res.<span class="fn">drop</span>(columns=[drug]).values
+n_susceptible = np.<span class="fn">sum</span>(y == <span class="num">0</span>)
+n_resistant = np.<span class="fn">sum</span>(y == <span class="num">1</span>)
+imbalance_ratio = n_susceptible / n_resistant \
+    <span class="kw">if</span> n_resistant > <span class="num">0</span> <span class="kw">else</span> <span class="num">1.0</span></pre>
+        </div>
+        <div class="english-side">
+          <div class="en-line"><span class="arrow">→</span><span class="text">Staple the DNA data and drug labels together side-by-side (like merging two spreadsheet tabs)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Remove any patient rows where this drug wasn't tested (the -1s)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Pull out just the resistance labels (0 or 1) as a list</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Pull out just the 222 DNA <span class="tt" data-term="feature">features</span> (drop the label column)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Count how many patients are susceptible (label = 0)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Count how many patients are resistant (label = 1)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Calculate how unbalanced the classes are — used later to weight the <span class="tt" data-term="training">training</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ 3 -->
+    <div class="quiz-block fade-in">
+      <div class="quiz-q">🧩 Quiz: OFLX has std=0.028 in AUROC across 5 folds, while RIF has std=0.003. Based purely on what you learned about the data, what's the most likely explanation?</div>
+      <div class="quiz-options" data-quiz="q3">
+        <div class="quiz-option" data-correct="false" data-exp="Both drugs use identical code — same models, same training loop. A bug would affect all drugs equally.">
+          <span class="opt-letter">A</span><span class="opt-text">The OFLX model has a bug</span>
+        </div>
+        <div class="quiz-option" data-correct="true" data-exp="Correct! OFLX has only 87 susceptible patients. In 5-fold CV, each fold gets ~17 susceptible samples. Random variation in who lands in which fold creates big swings in AUROC.">
+          <span class="opt-letter">B</span><span class="opt-text">OFLX has only 87 susceptible patients — tiny minority class means each fold gets different lucky/unlucky splits</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="All 11 drugs use the same 4 model architectures. There is no drug-specific architecture.">
+          <span class="opt-letter">C</span><span class="opt-text">OFLX uses a different model architecture</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="Data corruption would cause errors or NaN values — not high variance in valid metric scores.">
+          <span class="opt-letter">D</span><span class="opt-text">The OFLX CSV rows are corrupted</span>
+        </div>
+      </div>
+      <div class="quiz-explanation" id="q3-exp"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ MODULE 4 ═══ -->
+<section class="module" id="module-3">
+  <div class="module-inner">
+    <div class="module-label">Module 4 of 6</div>
+    <h2 class="section-title">Training Day<br>— 220 Models in One Script</h2>
+    <p class="body-text">Medical licensing boards don't test new doctors on their own patients. They use standardized cases the doctor has never seen. <span class="tt" data-term="cv">K-fold cross-validation</span> works the same way — split the data into 5 groups, train on 4, test on the 1 held out, rotate, repeat. Each model gets tested 5 times on data it's never seen.</p>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">The 4 Models</h2>
+    <div class="model-grid fade-in">
+      <div class="model-card">
+        <div class="model-emoji">🌲</div>
+        <div class="model-nick">The Gradient Surfer</div>
+        <div class="model-name"><span class="tt" data-term="xgb">XGBoost</span></div>
+        <div class="model-desc">Builds trees one at a time, each one fixing where the previous went wrong. Like a sculptor who keeps refining the same block of marble.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-emoji">🌳</div>
+        <div class="model-nick">The Democracy</div>
+        <div class="model-name"><span class="tt" data-term="rf">Random Forest</span></div>
+        <div class="model-desc">Builds 500 independent trees and lets them vote. Chaotic individually, wise collectively.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-emoji">📈</div>
+        <div class="model-nick">The Minimalist</div>
+        <div class="model-name"><span class="tt" data-term="lr">Logistic Regression</span></div>
+        <div class="model-desc">Draws a single straight line through the data. Shockingly competitive for how simple it is.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-emoji">🎯</div>
+        <div class="model-nick">The Arbitrator</div>
+        <div class="model-name"><span class="tt" data-term="ensemble">Ensemble</span></div>
+        <div class="model-desc">Averages the probability estimates from all three. Hedges bets, rarely the worst performer.</div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Code ↔ English — The CV Loop</h2>
+    <div class="code-translation fade-in">
+      <div class="code-translation-header">
+        <div class="dot-red"></div><div class="dot-yellow"></div><div class="dot-green"></div>
+        <span style="margin-left:8px">tb_pipeline.py — cross-validation loop (lines 250–263)</span>
+      </div>
+      <div class="code-line-wrap">
+        <div class="code-side">
+          <pre><span class="kw">for</span> fold, (train_idx, val_idx) <span class="kw">in</span> <span class="fn">enumerate</span>(cv.<span class="fn">split</span>(X, y)):
+    X_train, X_val = X[train_idx], X[val_idx]
+    y_train, y_val = y[train_idx], y[val_idx]
+    model.<span class="fn">fit</span>(X_train, y_train)
+    y_pred_proba = model.<span class="fn">predict_proba</span>(X_val)[:, <span class="num">1</span>]
+    metrics = <span class="fn">calculate_metrics</span>(y_val, y_pred_proba)
+    fold_metrics.<span class="fn">append</span>(metrics)</pre>
+        </div>
+        <div class="english-side">
+          <div class="en-line"><span class="arrow">→</span><span class="text">Split data into 5 <span class="tt" data-term="fold">folds</span>. Each iteration gives two lists: rows to train on, rows to test on</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Select the training DNA <span class="tt" data-term="feature">features</span> (80% of rows)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Select the matching resistance labels</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Train the model — show it patterns and correct answers. This is where the learning happens.</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Ask the model to predict resistance probability for the held-out 20% it's never seen</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Score the predictions against the real labels</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Save this fold's scores to average later</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">The Ensemble Votes — Live Demo</h2>
+    <p class="body-text fade-in">Watch the three models debate a new patient case:</p>
+    <div id="group-chat" class="fade-in">
+      <button id="chat-play-btn">▶ Play conversation</button>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Code ↔ English — The Ensemble</h2>
+    <div class="code-translation fade-in">
+      <div class="code-translation-header">
+        <div class="dot-red"></div><div class="dot-yellow"></div><div class="dot-green"></div>
+        <span style="margin-left:8px">tb_pipeline.py — VotingClassifier (lines 135–143)</span>
+      </div>
+      <div class="code-line-wrap">
+        <div class="code-side">
+          <pre>ensemble = <span class="fn">VotingClassifier</span>(
+    estimators=[
+        (<span class="str">'xgb'</span>, models[<span class="str">'XGBoost'</span>]),
+        (<span class="str">'rf'</span>,  models[<span class="str">'RandomForest'</span>]),
+        (<span class="str">'lr'</span>,  models[<span class="str">'LogisticRegression'</span>])
+    ],
+    voting=<span class="str">'soft'</span>
+)</pre>
+        </div>
+        <div class="english-side">
+          <div class="en-line"><span class="arrow">→</span><span class="text">Create a committee <span class="tt" data-term="model">model</span> that collects votes from sub-models</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">The committee members list:</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Give <span class="tt" data-term="xgb">XGBoost</span> a name and a reference to the actual trained model object</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Same for <span class="tt" data-term="rf">Random Forest</span></span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Same for <span class="tt" data-term="lr">Logistic Regression</span></span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">End of list</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">'Soft' = average probability numbers, not just count yes/no votes. Uses confidence scores.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ 4 -->
+    <div class="quiz-block fade-in">
+      <div class="quiz-q">🧩 Quiz: You want the model to prioritize catching EVERY resistant case, even if that means more false alarms. Which parameter controls this, and how would you change it?</div>
+      <div class="quiz-options" data-quiz="q4">
+        <div class="quiz-option" data-correct="false" data-exp="More trees improves overall accuracy, not the class bias. n_estimators doesn't know which class you care about more.">
+          <span class="opt-letter">A</span><span class="opt-text">Increase <code>n_estimators</code> — more trees means better coverage</span>
+        </div>
+        <div class="quiz-option" data-correct="true" data-exp="Correct! scale_pos_weight multiplies the penalty for missing a resistant case. A higher weight forces the model to try harder on the minority class.">
+          <span class="opt-letter">B</span><span class="opt-text">Increase <code>scale_pos_weight</code> — this multiplies the penalty for missing a resistant case</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="max_depth controls tree complexity, not which class the model prioritizes. Shallower trees just underfit.">
+          <span class="opt-letter">C</span><span class="opt-text">Decrease <code>max_depth</code> — shallower trees are more conservative</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="hard vs soft voting affects HOW votes are combined (binary vs probability), not WHICH class is prioritized.">
+          <span class="opt-letter">D</span><span class="opt-text">Set <code>voting='hard'</code> — strict majority rule</span>
+        </div>
+      </div>
+      <div class="quiz-explanation" id="q4-exp"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ MODULE 5 ═══ -->
+<section class="module" id="module-4">
+  <div class="module-inner">
+    <div class="module-label">Module 5 of 6</div>
+    <h2 class="section-title">Metrics That<br>Actually Matter</h2>
+    <p class="body-text">If 90% of your email is ham and 10% is spam, a model that labels everything "ham" gets <strong>90% accuracy</strong>. It's useless — it catches zero spam. The same trap exists here: if only 12% of patients are susceptible to OFLX, a model that labels everyone "resistant" gets 88% accuracy. Impressive number. Dangerous outcome.</p>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">What AUROC Actually Means</h2>
+    <p class="body-text fade-in">The <span class="tt" data-term="auroc">AUROC</span> curve shows the tradeoff between catching resistant cases (True Positive Rate) and wrongly flagging susceptible ones (False Positive Rate). The area under this curve = AUROC. <strong>1.0 is perfect</strong>. <strong>0.5 is a coin flip</strong>. 0.99 means the model ranked every resistant patient above every susceptible one.</p>
+
+    <div class="auroc-visual fade-in">
+      <div class="auroc-canvas-wrap">
+        <canvas id="auroc-canvas" width="360" height="320"></canvas>
+      </div>
+      <div class="auroc-labels">
+        <span>False Positive Rate →</span>
+        <span style="position:absolute;left:16px;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:left center;white-space:nowrap;font-size:0.72rem">↑ True Positive Rate</span>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">The Clinical Threshold Trade-off</h2>
+    <p class="body-text fade-in">At what probability do we call someone "resistant"? The threshold is a clinical decision:</p>
+    <div class="threshold-grid fade-in">
+      <div class="threshold-card fn">
+        <div class="threshold-card-title">❌ Miss a resistant case (False Negative)</div>
+        <p>Patient gets a useless drug for 2–6 weeks. Disease progresses. MDR-TB may worsen. Lives at risk.</p>
+      </div>
+      <div class="threshold-card fp">
+        <div class="threshold-card-title">⚠️ Wrongly flag as resistant (False Positive)</div>
+        <p>Patient gets an alternative drug — suboptimal but not fatal. We'd rather be cautious.</p>
+      </div>
+    </div>
+    <p class="body-text fade-in"><strong>Conclusion:</strong> We'd rather have false positives than false negatives. Set threshold so <span class="tt" data-term="sensitivity">sensitivity</span> ≥ 90%.</p>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Code ↔ English — Threshold Finding</h2>
+    <div class="code-translation fade-in">
+      <div class="code-translation-header">
+        <div class="dot-red"></div><div class="dot-yellow"></div><div class="dot-green"></div>
+        <span style="margin-left:8px">tb_pipeline.py — threshold finding (lines 174–184)</span>
+      </div>
+      <div class="code-line-wrap">
+        <div class="code-side">
+          <pre>fpr, tpr, thresholds = <span class="fn">roc_curve</span>(y_true, y_pred_proba)
+idx = np.<span class="fn">argmin</span>(np.<span class="fn">abs</span>(tpr - target_sensitivity))
+threshold = thresholds[idx]
+y_pred = (y_pred_proba >= threshold).<span class="fn">astype</span>(<span class="fn">int</span>)
+tn, fp, fn, tp = <span class="fn">confusion_matrix</span>(y_true, y_pred).<span class="fn">ravel</span>()
+specificity = tn / (tn + fp) <span class="kw">if</span> (tn + fp) > <span class="num">0</span> <span class="kw">else</span> <span class="num">0</span></pre>
+        </div>
+        <div class="english-side">
+          <div class="en-line"><span class="arrow">→</span><span class="text">Calculate the full sensitivity–specificity curve at every possible <span class="tt" data-term="threshold">threshold</span></span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Find the point on the curve closest to 90% sensitivity</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Lock in that threshold value (e.g., predict 'resistant' if probability > 0.35)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Apply the threshold: convert probability scores into 0/1 predictions</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Unpack the <span class="tt" data-term="cm">confusion matrix</span> into four buckets: TN, FP, FN, <span class="tt" data-term="tp">TP</span></span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text"><span class="tt" data-term="specificity">Specificity</span> = what fraction of actually-susceptible patients did we correctly identify</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Results @ 90% Sensitivity</h2>
+    <div class="results-cards fade-in" id="results-cards">
+      <div class="result-row">
+        <div class="result-drug">RIF</div>
+        <div class="result-spec-bar"><div class="result-spec-fill" style="width:0%" data-target="99%"></div></div>
+        <div class="result-spec-label">99%</div>
+        <div class="result-verdict verdict-deploy">Clinically deployable</div>
+      </div>
+      <div class="result-row">
+        <div class="result-drug">INH</div>
+        <div class="result-spec-bar"><div class="result-spec-fill" style="width:0%" data-target="98%"></div></div>
+        <div class="result-spec-label">98%</div>
+        <div class="result-verdict verdict-deploy">Clinically deployable</div>
+      </div>
+      <div class="result-row">
+        <div class="result-drug">OFLX</div>
+        <div class="result-spec-bar"><div class="result-spec-fill" style="width:0%" data-target="86%"></div></div>
+        <div class="result-spec-label">86%</div>
+        <div class="result-verdict verdict-good">Good</div>
+      </div>
+      <div class="result-row">
+        <div class="result-drug">MOXI</div>
+        <div class="result-spec-bar"><div class="result-spec-fill" style="width:0%" data-target="77%"></div></div>
+        <div class="result-spec-label">77%</div>
+        <div class="result-verdict verdict-limited">Data-limited</div>
+      </div>
+      <div class="result-row">
+        <div class="result-drug">KAN</div>
+        <div class="result-spec-bar"><div class="result-spec-fill" style="width:0%" data-target="77%"></div></div>
+        <div class="result-spec-label">77%</div>
+        <div class="result-verdict verdict-limited">Data-limited</div>
+      </div>
+    </div>
+
+    <!-- QUIZ 5 -->
+    <div class="quiz-block fade-in">
+      <div class="quiz-q">🧩 Quiz: A hospital proudly announces their TB model has AUROC = 0.96. Before recommending it for clinical use, what's the ONE number you'd demand to see?</div>
+      <div class="quiz-options" data-quiz="q5">
+        <div class="quiz-option" data-correct="false" data-exp="Accuracy is exactly what AUROC was invented to fix — it's the wrong metric for imbalanced data like this.">
+          <span class="opt-letter">A</span><span class="opt-text">The accuracy percentage</span>
+        </div>
+        <div class="quiz-option" data-correct="true" data-exp="Correct! AUROC doesn't tell you how the model behaves at any specific threshold. A 0.96 AUROC model could still have 60% sensitivity at threshold 0.5 — meaning 40% of resistant patients get missed.">
+          <span class="opt-letter">B</span><span class="opt-text">The sensitivity at their actual decision threshold</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="The Python library (sklearn, xgboost, etc.) doesn't affect the metric validity. Any library can implement AUROC correctly.">
+          <span class="opt-letter">C</span><span class="opt-text">Which Python library they used</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="Hardware affects training speed, not accuracy. A model trained on 1 GPU gives identical results to one trained on 100 GPUs.">
+          <span class="opt-letter">D</span><span class="opt-text">How many GPUs they trained on</span>
+        </div>
+      </div>
+      <div class="quiz-explanation" id="q5-exp"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ MODULE 6 ═══ -->
+<section class="module" id="module-5">
+  <div class="module-inner">
+    <div class="module-label">Module 6 of 6</div>
+    <h2 class="section-title">The Visualization Layer<br>— Reading the Report Card</h2>
+    <p class="body-text">Think of the pipeline as a scientific study. <code>tb_pipeline.py</code> is the lab running the experiment and writing up the raw numbers. <code>generate_visualisations.py</code> is the graphic designer who takes those numbers and turns them into figures for the journal paper.</p>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">The 7 Figures</h2>
+    <div class="figure-grid fade-in">
+      <div class="figure-card">
+        <div class="figure-num">01_class_imbalance.png</div>
+        <div class="figure-name">Who's in the room?</div>
+        <div class="figure-subtitle">Horizontal bar chart</div>
+        <div class="figure-desc">Susceptible vs resistant patient counts per drug. Shows why OFLX is harder to model than RIF.</div>
+      </div>
+      <div class="figure-card">
+        <div class="figure-num">02_auroc_heatmap.png</div>
+        <div class="figure-name">The report card</div>
+        <div class="figure-subtitle">4 models × 11 drugs color grid</div>
+        <div class="figure-desc">Darker = better. Lets you spot which model-drug combinations perform best at a glance.</div>
+      </div>
+      <div class="figure-card">
+        <div class="figure-num">03_roc_curves_yatin.png</div>
+        <div class="figure-name">The performance curve</div>
+        <div class="figure-subtitle">OFLX, AMK, INH ROC curves</div>
+        <div class="figure-desc">Shows the full sensitivity-specificity tradeoff with the 90% sensitivity target marked.</div>
+      </div>
+      <div class="figure-card">
+        <div class="figure-num">04_sensitivity_specificity.png</div>
+        <div class="figure-name">The scatter plot of clinical reality</div>
+        <div class="figure-subtitle">All drug-model combos</div>
+        <div class="figure-desc">Sensitivity vs specificity space. Top-right corner = clinically deployable.</div>
+      </div>
+      <div class="figure-card">
+        <div class="figure-num">05_feature_importance.png</div>
+        <div class="figure-name">What the AI noticed</div>
+        <div class="figure-subtitle">Top 15 DNA variants</div>
+        <div class="figure-desc">Which <span class="tt" data-term="snp">SNPs</span> most predicted resistance. katG_S315T dominates for INH.</div>
+      </div>
+      <div class="figure-card">
+        <div class="figure-num">06_model_comparison.png</div>
+        <div class="figure-name">Head-to-head</div>
+        <div class="figure-subtitle">Bar chart with error bars</div>
+        <div class="figure-desc">Mean AUROC ± std across all 5 folds, all 11 drugs. XGBoost vs RF vs LR vs Ensemble.</div>
+      </div>
+      <div class="figure-card" style="grid-column:1/-1">
+        <div class="figure-num">07_confusion_matrices.png</div>
+        <div class="figure-name">The detailed scorecard</div>
+        <div class="figure-subtitle">Normalized 2×2 confusion matrices</div>
+        <div class="figure-desc">Shows exactly how the model distributes its mistakes — TN, FP, FN, TP for every drug-model pair.</div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Code ↔ English — Building the Heatmap Data</h2>
+    <div class="code-translation fade-in">
+      <div class="code-translation-header">
+        <div class="dot-red"></div><div class="dot-yellow"></div><div class="dot-green"></div>
+        <span style="margin-left:8px">generate_visualisations.py — AUROC extraction (lines 120–126)</span>
+      </div>
+      <div class="code-line-wrap">
+        <div class="code-side">
+          <pre>auroc_data = []
+<span class="kw">for</span> model <span class="kw">in</span> models:
+    row = []
+    <span class="kw">for</span> drug <span class="kw">in</span> DRUGS:
+        auroc = drug_results[drug][<span class="str">'models'</span>][model][<span class="str">'auroc'</span>][<span class="str">'mean'</span>]
+        row.<span class="fn">append</span>(auroc)
+    auroc_data.<span class="fn">append</span>(row)</pre>
+        </div>
+        <div class="english-side">
+          <div class="en-line"><span class="arrow">→</span><span class="text">Start with an empty list that will become a grid (rows = models, columns = drugs)</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">For each of the 4 model types...</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">...start a new row in the grid</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">For each of the 11 drugs...</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Pull the mean <span class="tt" data-term="auroc">AUROC</span> for this drug-model combination from the <span class="tt" data-term="json">JSON</span></span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Add it to this model's row</span></div>
+          <div class="en-line"><span class="arrow">→</span><span class="text">Add the completed row to the grid — this becomes the heatmap data</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+    <h2 class="section-title fade-in">Full Pipeline — Data in Motion</h2>
+    <p class="body-text fade-in">The complete flow from raw data to published figures:</p>
+    <div id="pipeline-anim" class="fade-in">
+      <div class="pipe-node" id="pn0">tb_pipeline.py</div>
+      <div class="pipe-arrow" id="pa0">→</div>
+      <div class="pipe-node" id="pn1">model_results.json</div>
+      <div class="pipe-arrow" id="pa1">→</div>
+      <div class="pipe-node" id="pn2">generate_visualisations.py</div>
+      <div class="pipe-arrow" id="pa2">→</div>
+      <div class="pipe-node" id="pn3">figures/02_auroc_heatmap.png</div>
+    </div>
+    <div id="pipe-label" style="font-size:0.82rem;color:var(--text-muted);margin-top:8px;min-height:24px;font-family:'DM Sans',sans-serif"></div>
+    <button id="pipe-play-btn" style="margin-top:12px;background:transparent;border:1.5px solid var(--accent);color:var(--accent);font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.85rem;padding:8px 20px;border-radius:8px;cursor:pointer;transition:all 0.2s">▶ Animate flow</button>
+
+    <!-- QUIZ 6 -->
+    <div class="quiz-block fade-in">
+      <div class="quiz-q">🧩 Quiz: You want to add a new visualization: a bar chart showing how each drug improved vs the original 2020 baseline. Where do you add the new function, and where does it get the data?</div>
+      <div class="quiz-options" data-quiz="q6">
+        <div class="quiz-option" data-correct="false" data-exp="tb_pipeline.py does training and metric calculation — not visualization. Adding a chart function there would break the separation of concerns.">
+          <span class="opt-letter">A</span><span class="opt-text">Add a new function in tb_pipeline.py; it reads X_trainData_1.csv directly</span>
+        </div>
+        <div class="quiz-option" data-correct="true" data-exp="Correct! All visualization functions live in generate_visualisations.py and all read from results/model_results.json. The JSON is the interface — you just need to add baseline data to it.">
+          <span class="opt-letter">B</span><span class="opt-text">Add a new function in generate_visualisations.py; it reads from results/model_results.json</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="Both scripts are designed to run independently — the JSON is the interface. Creating a third script that imports from both would create circular dependencies.">
+          <span class="opt-letter">C</span><span class="opt-text">Add it to a new file that imports from both scripts</span>
+        </div>
+        <div class="quiz-option" data-correct="false" data-exp="X_trainData_1.csv contains raw genomic SNP/indel data — not model performance scores. Adding scores there would corrupt the training data.">
+          <span class="opt-letter">D</span><span class="opt-text">Modify X_trainData_1.csv to include baseline scores</span>
+        </div>
+      </div>
+      <div class="quiz-explanation" id="q6-exp"></div>
+    </div>
+
+    <div class="conclusion-banner fade-in">
+      <h2>You now understand this entire codebase.</h2>
+      <p>From 3,393 bacterial DNA profiles → 220 trained models → 5 clinical-grade drug resistance predictions → 7 publication-quality figures. One pipeline. Two scripts. One JSON handoff. That's the whole thing.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+'use strict';
+
+// ─── GLOSSARY ────────────────────────────────────────────────────────────────
+const GLOSSARY = {
+  drug: 'Anti-TB drugs are antibiotics that kill Mycobacterium tuberculosis. Resistance means the bacteria evolved to survive the drug.',
+  csv: 'CSV = Comma-Separated Values. A spreadsheet saved as plain text — each row is a patient, each column is a feature or label.',
+  model: 'An AI model is a mathematical function trained to find patterns in data. Here, it learns which DNA mutations predict drug resistance.',
+  training: 'Training = showing the model thousands of examples (DNA + label) so it learns the pattern. Like studying for an exam with a textbook.',
+  cv: 'Cross-validation (CV): split data into K groups, train on K-1, test on 1 held-out group, rotate. Gives K independent accuracy scores.',
+  fold: 'One iteration of cross-validation. With 5-fold CV, each fold is 20% of the data used for testing.',
+  auroc: 'AUROC = Area Under the ROC Curve. 1.0 = perfect model, 0.5 = coin flip. Measures discrimination power independent of threshold.',
+  sensitivity: 'Sensitivity (Recall) = % of actual resistant patients correctly identified. At 90% sensitivity, 1 in 10 resistant cases is missed.',
+  specificity: 'Specificity = % of actually susceptible patients correctly identified. High specificity = few false alarms.',
+  cm: 'Confusion matrix: a 2×2 grid showing True Positives, False Positives, True Negatives, False Negatives.',
+  tp: 'True Positive: correctly predicted as resistant. True Negative: correctly predicted as susceptible.',
+  threshold: 'The probability cutoff above which we predict "resistant". Lower threshold = more sensitive but more false alarms.',
+  snp: 'SNP = Single Nucleotide Polymorphism. A single DNA letter that differs from the reference genome. Each column in X_trainData_1.csv is one SNP.',
+  indel: 'Indel = insertion or deletion of DNA bases. Like adding or removing a word from a sentence — can break a gene\'s function.',
+  dna: 'DNA encodes the bacterium\'s instructions. Mutations (SNPs, indels) in certain genes cause drug resistance.',
+  feature: 'Feature = one input variable. Here, each of 222 SNPs/indels is a feature. The model learns which features predict resistance.',
+  imbalance: 'Class imbalance: when one class (e.g. resistant) is much more common than the other (susceptible). Makes accuracy a misleading metric.',
+  json: 'JSON = JavaScript Object Notation. A structured text file for storing nested data. Like a Python dictionary saved to disk.',
+  python: 'Python is the programming language used here. Think of it as instructions written in near-English that the computer executes.',
+  function: 'A function is a reusable block of code with a name. Call it anywhere and it runs the same steps every time.',
+  dict: 'Dictionary = a Python data structure that maps keys to values. Like a real dictionary: look up a word (key), get a definition (value).',
+  xgb: 'XGBoost = Extreme Gradient Boosting. Builds an ensemble of decision trees sequentially, each fixing the previous one\'s errors.',
+  rf: 'Random Forest: trains hundreds of independent decision trees on random data subsets, then averages their predictions.',
+  lr: 'Logistic Regression: fits a linear decision boundary to predict binary outcomes (0 or 1). Fast, interpretable, surprisingly strong.',
+  ensemble: 'Ensemble = combine multiple models. Often outperforms any single model by averaging out individual errors.',
+  numpy: 'NumPy = Numerical Python. Provides fast array operations. np.sum, np.argmin etc. are NumPy functions.',
+  pandas: 'Pandas = Python data analysis library. Provides DataFrames — think spreadsheets in code. pd.read_csv() loads CSVs.',
+  dataframe: 'DataFrame = a 2D table in Pandas. Rows are patients, columns are features. Like Excel, but for code.',
+  stratified: 'Stratified K-fold: ensures each fold has the same proportion of each class as the full dataset. Critical for imbalanced data.',
+  genomic: 'Genomic = relating to the genome (all the DNA) of an organism. Genomic features here = which mutations are present.',
+  binary: 'Binary classification: predicting one of two classes (resistant/susceptible, spam/ham, sick/healthy).',
+  hyperparameter: 'Hyperparameter = a setting you choose before training (like max_depth, n_estimators). The model doesn\'t learn these — you set them.',
+  scale_pos_weight: 'scale_pos_weight (XGBoost): multiplies the loss for the positive class. Set to n_neg/n_pos to compensate for class imbalance.',
+  roc: 'ROC = Receiver Operating Characteristic curve. Plots True Positive Rate vs False Positive Rate at every possible threshold.'
+};
+
+// Tooltip
+const tooltip = document.getElementById('tooltip-box');
+let tooltipTimer;
+
+function showTooltip(el, text) {
+  clearTimeout(tooltipTimer);
+  tooltip.textContent = text;
+  tooltip.style.opacity = '1';
+  positionTooltip(el);
+}
+
+function positionTooltip(el) {
+  const r = el.getBoundingClientRect();
+  const tw = Math.min(280, window.innerWidth - 24);
+  let left = r.left + r.width / 2 - tw / 2;
+  let top = r.top - 8;
+  left = Math.max(12, Math.min(left, window.innerWidth - tw - 12));
+  if (top < 60) top = r.bottom + 8;
+  else top = top - tooltip.offsetHeight - 8;
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+  tooltip.style.maxWidth = tw + 'px';
+}
+
+function hideTooltip() {
+  tooltipTimer = setTimeout(() => { tooltip.style.opacity = '0'; }, 100);
+}
+
+document.addEventListener('click', function(e) {
+  const el = e.target.closest('.tt');
+  if (!el) { hideTooltip(); return; }
+  const term = el.dataset.term;
+  if (GLOSSARY[term]) showTooltip(el, GLOSSARY[term]);
+});
+
+// Touch support
+document.addEventListener('touchstart', function(e) {
+  const el = e.target.closest('.tt');
+  if (el) {
+    e.preventDefault();
+    const term = el.dataset.term;
+    if (GLOSSARY[term]) showTooltip(el, GLOSSARY[term]);
+  } else {
+    hideTooltip();
+  }
+}, { passive: false });
+
+// ─── SCROLL & NAV ────────────────────────────────────────────────────────────
+const modules = Array.from(document.querySelectorAll('.module'));
+const dots = Array.from(document.querySelectorAll('.nav-dot'));
+const progressBar = document.getElementById('progress-bar');
+let ticking = false;
+
+function onScroll() {
+  if (!ticking) {
+    requestAnimationFrame(updateScroll);
+    ticking = true;
+  }
+}
+
+function updateScroll() {
+  ticking = false;
+  const scrollY = window.scrollY;
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (scrollY / docH * 100) + '%';
+
+  // Active module
+  let activeIdx = 0;
+  modules.forEach((m, i) => {
+    const top = m.offsetTop - 120;
+    if (scrollY >= top) activeIdx = i;
+  });
+  dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+
+  // Fade-ins
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+
+  // Imbalance bars
+  triggerImbalanceBars();
+  // Result bars
+  triggerResultBars();
+  // Data flow
+  checkDataFlowTrigger();
+  // AUROC canvas
+  checkAUROCTrigger();
+  // Pipeline anim
+  checkPipelineTrigger();
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll, { passive: true });
+
+// Dot nav click
+dots.forEach((d, i) => {
+  d.addEventListener('click', () => {
+    modules[i].scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ─── DATA FLOW ANIMATION ─────────────────────────────────────────────────────
+const flowNodes = Array.from(document.querySelectorAll('.flow-node'));
+const flowArrows = Array.from(document.querySelectorAll('.flow-arrow'));
+let flowRunning = false;
+let flowDone = false;
+let flowObserved = false;
+
+function runDataFlow() {
+  if (flowRunning) return;
+  flowRunning = true;
+  flowDone = false;
+  flowNodes.forEach(n => n.classList.remove('lit'));
+  flowArrows.forEach(a => a.classList.remove('lit'));
+  let i = 0;
+  function next() {
+    if (i < flowNodes.length) {
+      flowNodes[i].classList.add('lit');
+      if (i > 0) flowArrows[i-1].classList.add('lit');
+      i++;
+      setTimeout(next, 420);
+    } else {
+      flowRunning = false;
+      flowDone = true;
+    }
+  }
+  next();
+}
+
+function checkDataFlowTrigger() {
+  if (flowObserved || flowRunning || flowDone) return;
+  const df = document.getElementById('data-flow');
+  if (!df) return;
+  const r = df.getBoundingClientRect();
+  if (r.top < window.innerHeight - 80) {
+    flowObserved = true;
+    setTimeout(runDataFlow, 300);
+  }
+}
+
+document.getElementById('flow-restart').addEventListener('click', () => {
+  flowDone = false;
+  flowObserved = false;
+  flowRunning = false;
+  runDataFlow();
+});
+
+// ─── IMBALANCE BARS ──────────────────────────────────────────────────────────
+let imbDone = false;
+function triggerImbalanceBars() {
+  if (imbDone) return;
+  const vis = document.getElementById('imb-vis');
+  if (!vis) return;
+  const r = vis.getBoundingClientRect();
+  if (r.top < window.innerHeight - 40) {
+    imbDone = true;
+    vis.querySelectorAll('.imb-bar').forEach(bar => {
+      bar.style.width = bar.dataset.target;
+    });
+  }
+}
+
+// ─── RESULT BARS ─────────────────────────────────────────────────────────────
+let resDone = false;
+function triggerResultBars() {
+  if (resDone) return;
+  const rc = document.getElementById('results-cards');
+  if (!rc) return;
+  const r = rc.getBoundingClientRect();
+  if (r.top < window.innerHeight - 40) {
+    resDone = true;
+    rc.querySelectorAll('.result-spec-fill').forEach(bar => {
+      bar.style.width = bar.dataset.target;
+    });
+  }
+}
+
+// ─── AUROC CANVAS ────────────────────────────────────────────────────────────
+let aurocDone = false;
+function checkAUROCTrigger() {
+  if (aurocDone) return;
+  const c = document.getElementById('auroc-canvas');
+  if (!c) return;
+  const r = c.getBoundingClientRect();
+  if (r.top < window.innerHeight - 60) {
+    aurocDone = true;
+    drawAUROC(c);
+  }
+}
+
+function drawAUROC(canvas) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = 48;
+  const w = W - pad * 2, h = H - pad * 2;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = '#FFFFFF';
+  ctx.roundRect(0, 0, W, H, 12);
+  ctx.fill();
+
+  // Grid
+  ctx.strokeStyle = '#DDD5C8';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const x = pad + i * w / 4;
+    const y = pad + i * h / 4;
+    ctx.beginPath(); ctx.moveTo(x, pad); ctx.lineTo(x, pad + h); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(pad + w, y); ctx.stroke();
+  }
+
+  // Diagonal (chance)
+  ctx.strokeStyle = '#DDD5C8';
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  ctx.moveTo(pad, pad + h);
+  ctx.lineTo(pad + w, pad);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Labels
+  ctx.fillStyle = '#6B6560';
+  ctx.font = '11px DM Sans, sans-serif';
+  ctx.textAlign = 'center';
+  ['0.0','0.25','0.5','0.75','1.0'].forEach((l, i) => {
+    ctx.fillText(l, pad + i * w / 4, pad + h + 18);
+  });
+  ctx.textAlign = 'right';
+  ['0.0','0.25','0.5','0.75','1.0'].forEach((l, i) => {
+    ctx.fillText(l, pad - 8, pad + h - i * h / 4 + 4);
+  });
+
+  // Coin flip label
+  ctx.fillStyle = '#9CA3AF';
+  ctx.font = '10px DM Sans, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.save(); ctx.translate(pad + w * 0.55, pad + h * 0.52); ctx.rotate(-Math.PI/4);
+  ctx.fillText('Coin flip (AUROC=0.5)', 0, 0); ctx.restore();
+
+  // Animate curves
+  const curves = [
+    { name: 'RIF  AUROC=0.99', color: '#D94F3D', pts: makeCurve(0.99) },
+    { name: 'INH  AUROC=0.97', color: '#89B4FA', pts: makeCurve(0.97) },
+    { name: 'OFLX AUROC=0.93', color: '#A6E3A1', pts: makeCurve(0.93) },
+  ];
+
+  let prog = 0;
+  function animate() {
+    prog = Math.min(prog + 0.025, 1);
+
+    curves.forEach(curve => {
+      ctx.beginPath();
+      ctx.strokeStyle = curve.color;
+      ctx.lineWidth = 2.5;
+      const end = Math.floor(curve.pts.length * prog);
+      curve.pts.slice(0, end).forEach((p, i) => {
+        const px = pad + p[0] * w;
+        const py = pad + h - p[1] * h;
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      });
+      ctx.stroke();
+    });
+
+    if (prog < 1) requestAnimationFrame(animate);
+    else {
+      // Legend
+      curves.forEach((c, i) => {
+        const lx = pad + 8, ly = pad + 16 + i * 20;
+        ctx.fillStyle = c.color;
+        ctx.fillRect(lx, ly - 8, 20, 3);
+        ctx.fillStyle = '#1A1714';
+        ctx.font = '11px JetBrains Mono, monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(c.name, lx + 26, ly);
+      });
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+function makeCurve(auroc) {
+  // Generate a realistic-looking ROC curve for given AUROC
+  const pts = [[0, 0]];
+  const n = 60;
+  for (let i = 1; i <= n; i++) {
+    const fpr = i / n;
+    // Use beta distribution approximation
+    const tpr = Math.min(1, Math.pow(fpr, Math.pow(1 - auroc, 1.5) * 0.5));
+    pts.push([fpr, tpr]);
+  }
+  // Make it look more realistic with some curve
+  return pts.map(([x, y]) => {
+    const boost = auroc * 0.6;
+    const ny = Math.min(1, y + boost * (1 - x) * x * 3.5);
+    return [x, ny];
+  });
+}
+
+// ─── PIPELINE ANIMATION ───────────────────────────────────────────────────────
+let pipeDone = false;
+let pipeObserved = false;
+
+function checkPipelineTrigger() {
+  if (pipeObserved) return;
+  const pa = document.getElementById('pipeline-anim');
+  if (!pa) return;
+  const r = pa.getBoundingClientRect();
+  if (r.top < window.innerHeight - 80) {
+    pipeObserved = true;
+    runPipelineAnim();
+  }
+}
+
+const pipeLabels = [
+  'tb_pipeline.py trains 220 models and generates metrics...',
+  'Writing model_results.json with all scores...',
+  'generate_visualisations.py reads the JSON report card...',
+  'Rendering figures/02_auroc_heatmap.png to disk. Done!'
+];
+
+function runPipelineAnim() {
+  if (pipeDone) return;
+  pipeDone = true;
+  const nodes = [0,1,2,3].map(i => document.getElementById('pn' + i));
+  const arrows = [0,1,2].map(i => document.getElementById('pa' + i));
+  const label = document.getElementById('pipe-label');
+
+  nodes.forEach(n => n && n.classList.remove('active'));
+  arrows.forEach(a => a && a.classList.remove('active'));
+
+  let step = 0;
+  function next() {
+    if (step > 3) return;
+    if (nodes[step]) nodes[step].classList.add('active');
+    if (step > 0 && arrows[step-1]) arrows[step-1].classList.add('active');
+    if (label) label.textContent = pipeLabels[step];
+    step++;
+    if (step <= 3) setTimeout(next, 900);
+  }
+  setTimeout(next, 200);
+}
+
+document.getElementById('pipe-play-btn').addEventListener('click', () => {
+  pipeDone = false;
+  const nodes = [0,1,2,3].map(i => document.getElementById('pn' + i));
+  const arrows = [0,1,2].map(i => document.getElementById('pa' + i));
+  nodes.forEach(n => n && n.classList.remove('active'));
+  arrows.forEach(a => a && a.classList.remove('active'));
+  runPipelineAnim();
+});
+
+// ─── GROUP CHAT ANIMATION ────────────────────────────────────────────────────
+const chatMessages = [
+  {
+    side: 'system-msg',
+    avatar: '🖥',
+    avatarBg: '#1E1E2E',
+    avatarColor: '#CDD6F4',
+    text: 'New patient TB-3394 — katG_S315T: 1, inhA: 0, 220 other features loaded'
+  },
+  {
+    side: 'left',
+    avatar: 'XG',
+    avatarBg: '#89B4FA',
+    avatarColor: '#1E1E2E',
+    text: "I've seen this pattern. katG_S315T=1 is the single strongest INH predictor. My probability: <strong>82% resistant</strong>"
+  },
+  {
+    side: 'right',
+    avatar: 'RF',
+    avatarBg: '#A6E3A1',
+    avatarColor: '#1E1E2E',
+    text: "My 500 trees voted 437–63. Resistance score: <strong>86% resistant</strong>"
+  },
+  {
+    side: 'left',
+    avatar: 'LR',
+    avatarBg: '#6C7086',
+    avatarColor: '#fff',
+    text: "Linear weights point to resistance. Probability: <strong>79% resistant</strong>"
+  },
+  {
+    side: 'center',
+    avatar: '🎯',
+    avatarBg: '#D94F3D',
+    avatarColor: '#fff',
+    text: "Averaging: (0.82 + 0.86 + 0.79) ÷ 3 = <strong>0.823</strong>. Threshold 0.5 → VERDICT: RESISTANT 🔴"
+  }
+];
+
+let chatPlayed = false;
+const chatContainer = document.getElementById('group-chat');
+const chatPlayBtn = document.getElementById('chat-play-btn');
+
+function buildChat() {
+  // Remove all messages but keep button
+  chatContainer.querySelectorAll('.chat-msg').forEach(m => m.remove());
+
+  chatMessages.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + msg.side;
+
+    const av = document.createElement('div');
+    av.className = 'chat-avatar';
+    av.style.background = msg.avatarBg;
+    av.style.color = msg.avatarColor;
+    av.textContent = msg.avatar;
+
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble';
+    bubble.innerHTML = msg.text;
+
+    if (msg.side === 'right') {
+      div.appendChild(bubble); div.appendChild(av);
+    } else {
+      div.appendChild(av); div.appendChild(bubble);
+    }
+
+    chatContainer.insertBefore(div, chatPlayBtn);
+  });
+}
+
+function playChat() {
+  if (chatPlayed) {
+    // Reset
+    chatContainer.querySelectorAll('.chat-msg').forEach(m => m.remove());
+    chatPlayed = false;
+  }
+  chatPlayBtn.disabled = true;
+  chatPlayBtn.textContent = '⏳ Playing...';
+  buildChat();
+
+  const msgs = chatContainer.querySelectorAll('.chat-msg');
+  msgs.forEach((m, i) => {
+    setTimeout(() => {
+      m.classList.add('visible');
+      if (i === msgs.length - 1) {
+        chatPlayed = true;
+        chatPlayBtn.disabled = false;
+        chatPlayBtn.textContent = '↺ Replay';
+      }
+    }, i * 800 + 200);
+  });
+}
+
+chatPlayBtn.addEventListener('click', playChat);
+
+// ─── QUIZ LOGIC ───────────────────────────────────────────────────────────────
+document.querySelectorAll('.quiz-options').forEach(opts => {
+  const quizId = opts.dataset.quiz;
+  opts.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      if (opts.dataset.answered) return;
+      opts.dataset.answered = '1';
+      const isCorrect = opt.dataset.correct === 'true';
+      const exp = document.getElementById(quizId + '-exp');
+
+      opts.querySelectorAll('.quiz-option').forEach(o => {
+        if (o === opt) {
+          o.classList.add(isCorrect ? 'correct' : 'wrong');
+        } else if (!isCorrect && o.dataset.correct === 'true') {
+          o.classList.add('correct');
+        } else {
+          o.classList.add('dimmed');
+        }
+      });
+
+      if (exp) {
+        exp.textContent = opt.dataset.exp;
+        exp.className = 'quiz-explanation show ' + (isCorrect ? 'correct-exp' : 'wrong-exp');
+      }
+    });
+  });
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+setTimeout(onScroll, 100);
+
+})();
+</script>
+</body>
+</html>
