@@ -1,0 +1,2118 @@
+{
+  "drug_results": {
+    "RIF": {
+      "drug": "RIF",
+      "n_samples": 3335,
+      "n_susceptible": 1278,
+      "n_resistant": 2057,
+      "imbalance_ratio": 0.6212931453573165,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9938950564701644,
+            "std": 0.0030973842795044273
+          },
+          "accuracy": {
+            "mean": 0.969415292353823,
+            "std": 0.00419790104947528
+          },
+          "f1_macro": {
+            "mean": 0.9677009451938965,
+            "std": 0.004320575979925189
+          },
+          "sensitivity": {
+            "mean": 0.9732549075189569,
+            "std": 0.008302775963702021
+          },
+          "specificity": {
+            "mean": 0.9632230392156863,
+            "std": 0.003991452328049464
+          },
+          "threshold_90_sens": 0.9451209306716919,
+          "specificity_at_90_sens": 0.9976525821596244
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.9901537211400576,
+            "std": 0.004443576586555505
+          },
+          "accuracy": {
+            "mean": 0.9532233883058471,
+            "std": 0.011589893907099066
+          },
+          "f1_macro": {
+            "mean": 0.9508535620739258,
+            "std": 0.011947067403542462
+          },
+          "sensitivity": {
+            "mean": 0.9523386010913472,
+            "std": 0.019342270444272266
+          },
+          "specificity": {
+            "mean": 0.9546017156862746,
+            "std": 0.013947707791246497
+          },
+          "threshold_90_sens": 0.889270281156418,
+          "specificity_at_90_sens": 0.9976525821596244
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9935942527323629,
+            "std": 0.0031156437820918912
+          },
+          "accuracy": {
+            "mean": 0.9634182908545726,
+            "std": 0.0060418115980839055
+          },
+          "f1_macro": {
+            "mean": 0.9613504806346853,
+            "std": 0.006240493777626062
+          },
+          "sensitivity": {
+            "mean": 0.9693607823683651,
+            "std": 0.01179734770158503
+          },
+          "specificity": {
+            "mean": 0.9538296568627451,
+            "std": 0.008367779738443493
+          },
+          "threshold_90_sens": 0.9077114684755979,
+          "specificity_at_90_sens": 0.9976525821596244
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9939857378378502,
+            "std": 0.0029163864602226434
+          },
+          "accuracy": {
+            "mean": 0.9673163418290855,
+            "std": 0.00602691191671419
+          },
+          "f1_macro": {
+            "mean": 0.9655351255736446,
+            "std": 0.006225049719133301
+          },
+          "sensitivity": {
+            "mean": 0.969364325703352,
+            "std": 0.011791220338323027
+          },
+          "specificity": {
+            "mean": 0.9640042892156864,
+            "std": 0.008708449871393971
+          },
+          "threshold_90_sens": 0.9127958599647048,
+          "specificity_at_90_sens": 0.9976525821596244
+        }
+      },
+      "top_features": [
+        {
+          "feature": "eis_NC_indel",
+          "importance": 0.3651502728462219
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.23276127874851227
+        },
+        {
+          "feature": "SNP_CN_761155_C1349T_S450L_rpoB",
+          "importance": 0.03388768807053566
+        },
+        {
+          "feature": "SNP_I_2713795_C329T_inter_Rv2415c_eis",
+          "importance": 0.030799157917499542
+        },
+        {
+          "feature": "SNP_CN_2155168_C944G_S315T_katG",
+          "importance": 0.019997207447886467
+        },
+        {
+          "feature": "SNP_CN_2155168_C944T_S315N_katG",
+          "importance": 0.018743380904197693
+        },
+        {
+          "feature": "SNP_CN_761139_C1333T_H445Y_rpoB",
+          "importance": 0.012791325338184834
+        },
+        {
+          "feature": "SNP_CN_761139_C1333G_H445D_rpoB",
+          "importance": 0.01156376302242279
+        },
+        {
+          "feature": "SNP_CN_761110_A1304T_D435V_rpoB",
+          "importance": 0.010609191842377186
+        },
+        {
+          "feature": "pncA_C_snp",
+          "importance": 0.009010540321469307
+        },
+        {
+          "feature": "SNP_CN_761140_A1334G_H445R_rpoB",
+          "importance": 0.008195225149393082
+        },
+        {
+          "feature": "SNP_CN_4247431_G918A_M306I_embB",
+          "importance": 0.007832159288227558
+        },
+        {
+          "feature": "SNP_CN_4326996_GC_ethA_P160A",
+          "importance": 0.0066552129574120045
+        },
+        {
+          "feature": "SNP_P_1673425_C15T_promoter_fabG1-inhA",
+          "importance": 0.006583969574421644
+        },
+        {
+          "feature": "rpoB_C_snp",
+          "importance": 0.006300642620772123
+        },
+        {
+          "feature": "SNP_CN_1674481_T280G_S94A_inhA",
+          "importance": 0.006254346109926701
+        },
+        {
+          "feature": "SNP_CN_761161_T1355C_L452P_rpoB",
+          "importance": 0.005859666038304567
+        },
+        {
+          "feature": "SNP_CN_761277_A1471T_I491F_rpoB",
+          "importance": 0.005398943088948727
+        },
+        {
+          "feature": "pncA_F_indel",
+          "importance": 0.005270771216601133
+        },
+        {
+          "feature": "embA-embB_NC_snp",
+          "importance": 0.005184412933886051
+        }
+      ]
+    },
+    "INH": {
+      "drug": "INH",
+      "n_samples": 3356,
+      "n_susceptible": 1524,
+      "n_resistant": 1832,
+      "imbalance_ratio": 0.8318777292576419,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9895093405318031,
+            "std": 0.0012471392495698773
+          },
+          "accuracy": {
+            "mean": 0.9630522141792633,
+            "std": 0.0025487842589361383
+          },
+          "f1_macro": {
+            "mean": 0.9626956068179867,
+            "std": 0.002584728346110386
+          },
+          "sensitivity": {
+            "mean": 0.9710680305534461,
+            "std": 0.00874511152461199
+          },
+          "specificity": {
+            "mean": 0.9534037963761863,
+            "std": 0.010899142295966543
+          },
+          "threshold_90_sens": 0.9295096397399902,
+          "specificity_at_90_sens": 0.9921259842519685
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.986987321918886,
+            "std": 0.003500341996832247
+          },
+          "accuracy": {
+            "mean": 0.9561989922645662,
+            "std": 0.003940416510313895
+          },
+          "f1_macro": {
+            "mean": 0.9558351343362359,
+            "std": 0.003965837876057087
+          },
+          "sensitivity": {
+            "mean": 0.9585175920549128,
+            "std": 0.010545784255026084
+          },
+          "specificity": {
+            "mean": 0.9533994823123383,
+            "std": 0.010529299850018981
+          },
+          "threshold_90_sens": 0.8970718746280403,
+          "specificity_at_90_sens": 0.9934383202099738
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9881577915599232,
+            "std": 0.00245688526512183
+          },
+          "accuracy": {
+            "mean": 0.9654367149244198,
+            "std": 0.004828978952153636
+          },
+          "f1_macro": {
+            "mean": 0.9650649361186199,
+            "std": 0.004896879608839629
+          },
+          "sensitivity": {
+            "mean": 0.9781703667306919,
+            "std": 0.00808461253094621
+          },
+          "specificity": {
+            "mean": 0.9501207937877482,
+            "std": 0.010917101476672617
+          },
+          "threshold_90_sens": 0.9100500890107597,
+          "specificity_at_90_sens": 0.9901574803149606
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9892419797955279,
+            "std": 0.002320881774120488
+          },
+          "accuracy": {
+            "mean": 0.9639455148676461,
+            "std": 0.0017305072916259368
+          },
+          "f1_macro": {
+            "mean": 0.9635836529629144,
+            "std": 0.0017603788333109482
+          },
+          "sensitivity": {
+            "mean": 0.9737958041125058,
+            "std": 0.007048763205307589
+          },
+          "specificity": {
+            "mean": 0.9520923209663502,
+            "std": 0.008991672373850389
+          },
+          "threshold_90_sens": 0.8853944139563431,
+          "specificity_at_90_sens": 0.9921259842519685
+        }
+      },
+      "top_features": [
+        {
+          "feature": "rpsA_F_indel",
+          "importance": 0.6838357448577881
+        },
+        {
+          "feature": "SNP_CN_2155168_C944G_S315T_katG",
+          "importance": 0.05422987788915634
+        },
+        {
+          "feature": "rpsA_NC_indel",
+          "importance": 0.04521656781435013
+        },
+        {
+          "feature": "eis_NF_indel",
+          "importance": 0.04266165569424629
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.03496344015002251
+        },
+        {
+          "feature": "rpsA_NF_indel",
+          "importance": 0.013564294204115868
+        },
+        {
+          "feature": "SNP_P_1673425_C15T_promoter_fabG1-inhA",
+          "importance": 0.013229300267994404
+        },
+        {
+          "feature": "SNP_CN_4326996_GC_ethA_P160A",
+          "importance": 0.004669561516493559
+        },
+        {
+          "feature": "SNP_CN_761155_C1349T_S450L_rpoB",
+          "importance": 0.004270181059837341
+        },
+        {
+          "feature": "pncA_C_snp",
+          "importance": 0.0041199941188097
+        },
+        {
+          "feature": "SNP_CN_761110_A1304T_D435V_rpoB",
+          "importance": 0.0034396604169160128
+        },
+        {
+          "feature": "SNP_CN_4247431_G918A_M306I_embB",
+          "importance": 0.003295792965218425
+        },
+        {
+          "feature": "katG_C_snp",
+          "importance": 0.0029298251029103994
+        },
+        {
+          "feature": "SNP_CN_2155168_C944T_S315N_katG",
+          "importance": 0.0028434598352760077
+        },
+        {
+          "feature": "SNP_CN_412017_C1180G_Q394E_iniA",
+          "importance": 0.0026550807524472475
+        },
+        {
+          "feature": "SNP_P_1673423_G17T_promoter_fabG1-inhA",
+          "importance": 0.0023405407555401325
+        },
+        {
+          "feature": "SNP_CN_1674263_T62C_I21T_inhA",
+          "importance": 0.00226358394138515
+        },
+        {
+          "feature": "SNP_CN_1674481_T280G_S94A_inhA",
+          "importance": 0.0021984369959682226
+        },
+        {
+          "feature": "SNP_N_1475685_T2028C_rrl",
+          "importance": 0.002180025912821293
+        },
+        {
+          "feature": "ahpC_NC_snp",
+          "importance": 0.0019150086445733905
+        }
+      ]
+    },
+    "PZA": {
+      "drug": "PZA",
+      "n_samples": 2941,
+      "n_susceptible": 695,
+      "n_resistant": 2246,
+      "imbalance_ratio": 0.30943900267141583,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9614915746689953,
+            "std": 0.005494791252460799
+          },
+          "accuracy": {
+            "mean": 0.9204295300463139,
+            "std": 0.01014821430540774
+          },
+          "f1_macro": {
+            "mean": 0.8953387081044959,
+            "std": 0.013018770095627751
+          },
+          "sensitivity": {
+            "mean": 0.9234110368720613,
+            "std": 0.009665684995137001
+          },
+          "specificity": {
+            "mean": 0.9107913669064747,
+            "std": 0.019623283017245852
+          },
+          "threshold_90_sens": 0.788825273513794,
+          "specificity_at_90_sens": 0.9769784172661871
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.958526598765531,
+            "std": 0.005507588339930748
+          },
+          "accuracy": {
+            "mean": 0.9105725142348959,
+            "std": 0.006879015957191163
+          },
+          "f1_macro": {
+            "mean": 0.880073714887861,
+            "std": 0.00810561390776647
+          },
+          "sensitivity": {
+            "mean": 0.9265330363771345,
+            "std": 0.010746122323881856
+          },
+          "specificity": {
+            "mean": 0.8589928057553957,
+            "std": 0.016779717683008056
+          },
+          "threshold_90_sens": 0.757222029359345,
+          "specificity_at_90_sens": 0.9856115107913669
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9584896893175883,
+            "std": 0.007357257210094682
+          },
+          "accuracy": {
+            "mean": 0.9173717704399248,
+            "std": 0.007374833698567146
+          },
+          "f1_macro": {
+            "mean": 0.8927419004084106,
+            "std": 0.009050895210678657
+          },
+          "sensitivity": {
+            "mean": 0.9145073001732245,
+            "std": 0.00903163225542764
+          },
+          "specificity": {
+            "mean": 0.9266187050359711,
+            "std": 0.017266187050359733
+          },
+          "threshold_90_sens": 0.6132010028851982,
+          "specificity_at_90_sens": 0.9712230215827338
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.964188663323239,
+            "std": 0.006517491287057115
+          },
+          "accuracy": {
+            "mean": 0.9211115345968608,
+            "std": 0.00937915408605464
+          },
+          "f1_macro": {
+            "mean": 0.8963194921552116,
+            "std": 0.011978572313481574
+          },
+          "sensitivity": {
+            "mean": 0.9234149962880476,
+            "std": 0.007829400971216129
+          },
+          "specificity": {
+            "mean": 0.9136690647482013,
+            "std": 0.01509077479381514
+          },
+          "threshold_90_sens": 0.7193103460993591,
+          "specificity_at_90_sens": 0.9784172661870504
+        }
+      },
+      "top_features": [
+        {
+          "feature": "eis_NC_indel",
+          "importance": 0.26569902896881104
+        },
+        {
+          "feature": "eis_NF_indel",
+          "importance": 0.1781344711780548
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.15911857783794403
+        },
+        {
+          "feature": "pncA_C_snp",
+          "importance": 0.014670532196760178
+        },
+        {
+          "feature": "eis_C_snp",
+          "importance": 0.012310867197811604
+        },
+        {
+          "feature": "SNP_CN_6446_G1324T_A442S_gyrB",
+          "importance": 0.011891520582139492
+        },
+        {
+          "feature": "SNP_CN_2289090_TC_pncA_H51R",
+          "importance": 0.009544276632368565
+        },
+        {
+          "feature": "pncA_F_indel",
+          "importance": 0.009119318798184395
+        },
+        {
+          "feature": "SNP_CN_761161_T1355C_L452P_rpoB",
+          "importance": 0.009071705862879753
+        },
+        {
+          "feature": "SNP_I_2713795_C329T_inter_Rv2415c_eis",
+          "importance": 0.008587602525949478
+        },
+        {
+          "feature": "SNP_CN_7221_G2099C_S700T_gyrB",
+          "importance": 0.007512601092457771
+        },
+        {
+          "feature": "SNP_P_2289252_T11C_promoter_pncA",
+          "importance": 0.006112069822847843
+        },
+        {
+          "feature": "thyA_NC_snp",
+          "importance": 0.005540954880416393
+        },
+        {
+          "feature": "SNP_CN_7582_ACAG281-284GCAC_DS94-95GT_gyrA",
+          "importance": 0.005309018772095442
+        },
+        {
+          "feature": "SNP_P_2726105_G88A_promoter_ahpC",
+          "importance": 0.005116773769259453
+        },
+        {
+          "feature": "DEL_CF_4408101_d102C_34_gid",
+          "importance": 0.004877868574112654
+        },
+        {
+          "feature": "SNP_P_2726141_CA.52_ahpC",
+          "importance": 0.004832519218325615
+        },
+        {
+          "feature": "ahpC_NC_snp",
+          "importance": 0.004714724142104387
+        },
+        {
+          "feature": "SNP_CN_761155_C1349T_S450L_rpoB",
+          "importance": 0.004603767767548561
+        },
+        {
+          "feature": "SNP_CN_2155168_C944G_S315T_katG",
+          "importance": 0.004237195942550898
+        }
+      ]
+    },
+    "EMB": {
+      "drug": "EMB",
+      "n_samples": 3319,
+      "n_susceptible": 973,
+      "n_resistant": 2346,
+      "imbalance_ratio": 0.41474850809889174,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.974901016827598,
+            "std": 0.003968428402263637
+          },
+          "accuracy": {
+            "mean": 0.9273873775645569,
+            "std": 0.0074062896521577375
+          },
+          "f1_macro": {
+            "mean": 0.9149796301250716,
+            "std": 0.008560266709145494
+          },
+          "sensitivity": {
+            "mean": 0.9262550469536814,
+            "std": 0.007234259165888608
+          },
+          "specificity": {
+            "mean": 0.9301189532117368,
+            "std": 0.015395762698713433
+          },
+          "threshold_90_sens": 0.7801360487937927,
+          "specificity_at_90_sens": 0.9958890030832477
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.965782368945114,
+            "std": 0.008749138700793092
+          },
+          "accuracy": {
+            "mean": 0.9090120663650076,
+            "std": 0.015505788963979012
+          },
+          "f1_macro": {
+            "mean": 0.8943693125637283,
+            "std": 0.01768832661841064
+          },
+          "sensitivity": {
+            "mean": 0.9066442861679445,
+            "std": 0.01445317946346316
+          },
+          "specificity": {
+            "mean": 0.9147237642083004,
+            "std": 0.027003959497106433
+          },
+          "threshold_90_sens": 0.7463049437435785,
+          "specificity_at_90_sens": 0.9979445015416238
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9741412946643866,
+            "std": 0.003459980574393604
+          },
+          "accuracy": {
+            "mean": 0.9249791019280742,
+            "std": 0.011748465903591946
+          },
+          "f1_macro": {
+            "mean": 0.912689161479217,
+            "std": 0.01302274806779618
+          },
+          "sensitivity": {
+            "mean": 0.9202848976999501,
+            "std": 0.014522088234773812
+          },
+          "specificity": {
+            "mean": 0.9362780861749934,
+            "std": 0.01736939856478543
+          },
+          "threshold_90_sens": 0.6732670254987833,
+          "specificity_at_90_sens": 0.9835560123329907
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9747956481953202,
+            "std": 0.0053794664495299994
+          },
+          "accuracy": {
+            "mean": 0.9261825582874484,
+            "std": 0.010080339604452282
+          },
+          "f1_macro": {
+            "mean": 0.9138040166849833,
+            "std": 0.011218350327939611
+          },
+          "sensitivity": {
+            "mean": 0.9236927822891621,
+            "std": 0.012640604093948378
+          },
+          "specificity": {
+            "mean": 0.9321543748347872,
+            "std": 0.014366641689315554
+          },
+          "threshold_90_sens": 0.6957292884591656,
+          "specificity_at_90_sens": 0.9958890030832477
+        }
+      },
+      "top_features": [
+        {
+          "feature": "eis_NC_indel",
+          "importance": 0.3771304190158844
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.21529166400432587
+        },
+        {
+          "feature": "eis_NC_snp",
+          "importance": 0.031081924214959145
+        },
+        {
+          "feature": "SNP_CN_4247429_A916G_M306V_embB",
+          "importance": 0.01249447651207447
+        },
+        {
+          "feature": "SNP_CN_7582_ACAG281-284GCAC_DS94-95GT_gyrA",
+          "importance": 0.009024862200021744
+        },
+        {
+          "feature": "SNP_CN_2155168_C944T_S315N_katG",
+          "importance": 0.007253076881170273
+        },
+        {
+          "feature": "SNP_CN_4247431_G918C_M306I_embB",
+          "importance": 0.006980143953114748
+        },
+        {
+          "feature": "SNP_CN_2155168_C944G_S315T_katG",
+          "importance": 0.006886668968945742
+        },
+        {
+          "feature": "SNP_CN_4247431_G918A_M306I_embB",
+          "importance": 0.006522118113934994
+        },
+        {
+          "feature": "SNP_CN_761161_T1355C_L452P_rpoB",
+          "importance": 0.006234567146748304
+        },
+        {
+          "feature": "SNP_CN_409569_GA_iniB_A70T",
+          "importance": 0.0060726492665708065
+        },
+        {
+          "feature": "SNP_CN_4248003_A1490G_Q497R_embB",
+          "importance": 0.006052704062312841
+        },
+        {
+          "feature": "SNP_CN_761277_A1471T_I491F_rpoB",
+          "importance": 0.005923513788729906
+        },
+        {
+          "feature": "SNP_CN_761889_GC_rpoB_V695L",
+          "importance": 0.005786723457276821
+        },
+        {
+          "feature": "pncA_C_snp",
+          "importance": 0.005685443989932537
+        },
+        {
+          "feature": "SNP_CN_4326439_G1035T_N345K_ethA",
+          "importance": 0.0051748803816735744
+        },
+        {
+          "feature": "SNP_P_2726105_G88A_promoter_ahpC",
+          "importance": 0.005146803334355354
+        },
+        {
+          "feature": "SNP_CN_4242075_G2213A_R738Q_embC",
+          "importance": 0.005025199614465237
+        },
+        {
+          "feature": "SNP_CN_414041_T1285G_S429A_iniC",
+          "importance": 0.005000643897801638
+        },
+        {
+          "feature": "SNP_I_2713795_C329T_inter_Rv2415c_eis",
+          "importance": 0.004798524547368288
+        }
+      ]
+    },
+    "STR": {
+      "drug": "STR",
+      "n_samples": 2081,
+      "n_susceptible": 1020,
+      "n_resistant": 1061,
+      "imbalance_ratio": 0.9613572101790764,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9419411617069541,
+            "std": 0.006654000583334682
+          },
+          "accuracy": {
+            "mean": 0.8750611049621841,
+            "std": 0.009955448473492699
+          },
+          "f1_macro": {
+            "mean": 0.8750292754828379,
+            "std": 0.009956097543328907
+          },
+          "sensitivity": {
+            "mean": 0.8567587917441756,
+            "std": 0.01859590034460062
+          },
+          "specificity": {
+            "mean": 0.8941176470588236,
+            "std": 0.019754354587852806
+          },
+          "threshold_90_sens": 0.6632212400436401,
+          "specificity_at_90_sens": 0.9852941176470589
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.9257621726164112,
+            "std": 0.004013286336927387
+          },
+          "accuracy": {
+            "mean": 0.8534334071204575,
+            "std": 0.011098480482409079
+          },
+          "f1_macro": {
+            "mean": 0.8531601267416777,
+            "std": 0.01121326562585207
+          },
+          "sensitivity": {
+            "mean": 0.798299229338294,
+            "std": 0.022832001126524754
+          },
+          "specificity": {
+            "mean": 0.9107843137254902,
+            "std": 0.014997116216449379
+          },
+          "threshold_90_sens": 0.6430214421941635,
+          "specificity_at_90_sens": 0.9980392156862745
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9345063692054906,
+            "std": 0.008762286228421288
+          },
+          "accuracy": {
+            "mean": 0.8717072495849474,
+            "std": 0.011494182894303486
+          },
+          "f1_macro": {
+            "mean": 0.8716909801791923,
+            "std": 0.011494839476764884
+          },
+          "sensitivity": {
+            "mean": 0.8643015324652316,
+            "std": 0.012859340159695419
+          },
+          "specificity": {
+            "mean": 0.8794117647058822,
+            "std": 0.013006371726883955
+          },
+          "threshold_90_sens": 0.4660855621776069,
+          "specificity_at_90_sens": 0.903921568627451
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9397496738973736,
+            "std": 0.006074683317570466
+          },
+          "accuracy": {
+            "mean": 0.8813087991145545,
+            "std": 0.0038492474559443227
+          },
+          "f1_macro": {
+            "mean": 0.8812880502249651,
+            "std": 0.0038570242257146576
+          },
+          "sensitivity": {
+            "mean": 0.8614757728762511,
+            "std": 0.015121029626307
+          },
+          "specificity": {
+            "mean": 0.9019607843137255,
+            "std": 0.01278274981412282
+          },
+          "threshold_90_sens": 0.6078582591037213,
+          "specificity_at_90_sens": 0.9872549019607844
+        }
+      },
+      "top_features": [
+        {
+          "feature": "eis_NC_indel",
+          "importance": 0.18788814544677734
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.09831129014492035
+        },
+        {
+          "feature": "eis_NF_indel",
+          "importance": 0.06296710669994354
+        },
+        {
+          "feature": "SNP_CN_2155168_C944G_S315T_katG",
+          "importance": 0.020929230377078056
+        },
+        {
+          "feature": "SNP_CN_781687_A128G_K43R_rpsL",
+          "importance": 0.01675102673470974
+        },
+        {
+          "feature": "SNP_I_2713795_C329T_inter_Rv2415c_eis",
+          "importance": 0.014836074784398079
+        },
+        {
+          "feature": "SNP_CN_2289090_TC_pncA_H51R",
+          "importance": 0.009625579230487347
+        },
+        {
+          "feature": "SNP_N_1472359_A514C_rrs",
+          "importance": 0.009518591687083244
+        },
+        {
+          "feature": "SNP_CN_781822_A263G_K88R_rpsL",
+          "importance": 0.008642253465950489
+        },
+        {
+          "feature": "SNP_P_2289252_T11C_promoter_pncA",
+          "importance": 0.008616595529019833
+        },
+        {
+          "feature": "SNP_CN_4243848_G616A_V206M_embA",
+          "importance": 0.008377160876989365
+        },
+        {
+          "feature": "pncA_F_indel",
+          "importance": 0.008069655857980251
+        },
+        {
+          "feature": "SNP_CN_4407927_T276G_E92D_gid",
+          "importance": 0.007886816747486591
+        },
+        {
+          "feature": "SNP_CN_4247729_G1216A_G406S_embB",
+          "importance": 0.00749374320730567
+        },
+        {
+          "feature": "alr_C_snp",
+          "importance": 0.007386230863630772
+        },
+        {
+          "feature": "gid_C_snp",
+          "importance": 0.007337420713156462
+        },
+        {
+          "feature": "gid_F_indel",
+          "importance": 0.007182970177382231
+        },
+        {
+          "feature": "SNP_N_1473246_A1401G_rrs",
+          "importance": 0.006435083225369453
+        },
+        {
+          "feature": "SNP_CN_2726051_G37A_L13F_oxyR'",
+          "importance": 0.0062018269672989845
+        },
+        {
+          "feature": "SNP_N_1472362_C517T_rrs",
+          "importance": 0.006112183444201946
+        }
+      ]
+    },
+    "CIP": {
+      "drug": "CIP",
+      "n_samples": 1179,
+      "n_susceptible": 237,
+      "n_resistant": 942,
+      "imbalance_ratio": 0.2515923566878981,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9414401178081011,
+            "std": 0.024908694775842646
+          },
+          "accuracy": {
+            "mean": 0.905849260728453,
+            "std": 0.01573674950255823
+          },
+          "f1_macro": {
+            "mean": 0.8537294100127854,
+            "std": 0.030716659761867507
+          },
+          "sensitivity": {
+            "mean": 0.9373578745919172,
+            "std": 0.013224451802727058
+          },
+          "specificity": {
+            "mean": 0.7811170212765958,
+            "std": 0.0985696010399892
+          },
+          "threshold_90_sens": 0.7787763476371765,
+          "specificity_at_90_sens": 1.0
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.946084388121226,
+            "std": 0.021299567773530412
+          },
+          "accuracy": {
+            "mean": 0.9033104940497655,
+            "std": 0.01178198124986343
+          },
+          "f1_macro": {
+            "mean": 0.8309408669996475,
+            "std": 0.025633044737380126
+          },
+          "sensitivity": {
+            "mean": 0.9734718000675449,
+            "std": 0.004682195917572787
+          },
+          "specificity": {
+            "mean": 0.6247340425531915,
+            "std": 0.06255850840207332
+          },
+          "threshold_90_sens": 0.4729614267727534,
+          "specificity_at_90_sens": 1.0
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9326560071113603,
+            "std": 0.030113430878022745
+          },
+          "accuracy": {
+            "mean": 0.8838153624233682,
+            "std": 0.018210125892076746
+          },
+          "f1_macro": {
+            "mean": 0.8280674520958161,
+            "std": 0.031006116494589783
+          },
+          "sensitivity": {
+            "mean": 0.9076550714848587,
+            "std": 0.007793348857966851
+          },
+          "specificity": {
+            "mean": 0.78927304964539,
+            "std": 0.08347449188363848
+          },
+          "threshold_90_sens": 0.6073069652498989,
+          "specificity_at_90_sens": 0.9789029535864979
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9494094849473415,
+            "std": 0.022424549302815087
+          },
+          "accuracy": {
+            "mean": 0.9134944103858637,
+            "std": 0.017860763501392665
+          },
+          "f1_macro": {
+            "mean": 0.8624082194585183,
+            "std": 0.035556622294456865
+          },
+          "sensitivity": {
+            "mean": 0.9490543735224588,
+            "std": 0.007135763373413637
+          },
+          "specificity": {
+            "mean": 0.7727836879432625,
+            "std": 0.10420932429710517
+          },
+          "threshold_90_sens": 0.6885799275093557,
+          "specificity_at_90_sens": 1.0
+        }
+      },
+      "top_features": [
+        {
+          "feature": "SNP_CN_7582_AG_gyrA_D94G",
+          "importance": 0.05234308913350105
+        },
+        {
+          "feature": "SNP_I_2713872_C252A_inter_Rv2415c_eis",
+          "importance": 0.04700079560279846
+        },
+        {
+          "feature": "SNP_CN_7582_ACAG281-284GCAC_DS94-95GT_gyrA",
+          "importance": 0.04361318051815033
+        },
+        {
+          "feature": "SNP_CN_761277_A1471T_I491F_rpoB",
+          "importance": 0.0396278016269207
+        },
+        {
+          "feature": "SNP_CN_2726338_T146G_V49G_ahpC",
+          "importance": 0.03256978094577789
+        },
+        {
+          "feature": "SNP_CN_409770_GC_iniB_G137R",
+          "importance": 0.030795928090810776
+        },
+        {
+          "feature": "SNP_CN_7570_C269T_A90V_gyrA",
+          "importance": 0.02849178947508335
+        },
+        {
+          "feature": "SNP_N_1473911_G254A_rrl",
+          "importance": 0.028414230793714523
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.027170078828930855
+        },
+        {
+          "feature": "SNP_CN_4407904_GA_gid_S100F",
+          "importance": 0.02450285479426384
+        },
+        {
+          "feature": "SNP_CN_7582_AC_gyrA_D94A",
+          "importance": 0.023633986711502075
+        },
+        {
+          "feature": "INS_F_409772_i410ATCT_iniB_G137G",
+          "importance": 0.017404725775122643
+        },
+        {
+          "feature": "ahpC_NC_snp",
+          "importance": 0.015436535701155663
+        },
+        {
+          "feature": "SNP_CN_7585_G284C_S95T_gyrA",
+          "importance": 0.014907006174325943
+        },
+        {
+          "feature": "SNP_CN_2155276_CT_katG_G279D",
+          "importance": 0.014243276789784431
+        },
+        {
+          "feature": "SNP_I_2713795_C329T_inter_Rv2415c_eis",
+          "importance": 0.013432840816676617
+        },
+        {
+          "feature": "SNP_N_1473246_A1401G_rrs",
+          "importance": 0.01277537178248167
+        },
+        {
+          "feature": "SNP_CN_761109_G1303T_D435Y_rpoB",
+          "importance": 0.012088311836123466
+        },
+        {
+          "feature": "SNP_CN_2154613_TC_katG_Q500R",
+          "importance": 0.01198213454335928
+        },
+        {
+          "feature": "SNP_CN_410244_GC_iniB_V295L",
+          "importance": 0.011855230666697025
+        }
+      ]
+    },
+    "CAP": {
+      "drug": "CAP",
+      "n_samples": 1339,
+      "n_susceptible": 587,
+      "n_resistant": 752,
+      "imbalance_ratio": 0.7805851063829787,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9619603135086354,
+            "std": 0.007905709247567417
+          },
+          "accuracy": {
+            "mean": 0.8991866510145898,
+            "std": 0.013706492964923364
+          },
+          "f1_macro": {
+            "mean": 0.8977554597993714,
+            "std": 0.01400885261868497
+          },
+          "sensitivity": {
+            "mean": 0.9043002207505519,
+            "std": 0.017893002128402752
+          },
+          "specificity": {
+            "mean": 0.892742285962625,
+            "std": 0.029101352266736775
+          },
+          "threshold_90_sens": 0.82077556848526,
+          "specificity_at_90_sens": 0.9948892674616695
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.9689695778045762,
+            "std": 0.007323646653190192
+          },
+          "accuracy": {
+            "mean": 0.9163592151601542,
+            "std": 0.004410164950080791
+          },
+          "f1_macro": {
+            "mean": 0.9151761406186857,
+            "std": 0.004500688543095104
+          },
+          "sensitivity": {
+            "mean": 0.9202384105960265,
+            "std": 0.013762478184841744
+          },
+          "specificity": {
+            "mean": 0.9114298131247285,
+            "std": 0.016655354137728492
+          },
+          "threshold_90_sens": 0.7947600160582268,
+          "specificity_at_90_sens": 0.9965928449744463
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9567256038341456,
+            "std": 0.008543198124256766
+          },
+          "accuracy": {
+            "mean": 0.8924702331041422,
+            "std": 0.0161738596515174
+          },
+          "f1_macro": {
+            "mean": 0.8911750989437965,
+            "std": 0.016469054085089533
+          },
+          "sensitivity": {
+            "mean": 0.8909845474613688,
+            "std": 0.014119406857428678
+          },
+          "specificity": {
+            "mean": 0.8944516876720268,
+            "std": 0.025237151193970173
+          },
+          "threshold_90_sens": 0.6012378297512967,
+          "specificity_at_90_sens": 0.9625212947189097
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9668864757588521,
+            "std": 0.007247158058756245
+          },
+          "accuracy": {
+            "mean": 0.9044021465705182,
+            "std": 0.005656727949784986
+          },
+          "f1_macro": {
+            "mean": 0.9030972853426112,
+            "std": 0.005640568765465874
+          },
+          "sensitivity": {
+            "mean": 0.9082649006622517,
+            "std": 0.014699544374819034
+          },
+          "specificity": {
+            "mean": 0.8995219469795741,
+            "std": 0.013397692153065894
+          },
+          "threshold_90_sens": 0.6803894089576096,
+          "specificity_at_90_sens": 0.9948892674616695
+        }
+      },
+      "top_features": [
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.18709810078144073
+        },
+        {
+          "feature": "rpsA_NC_indel",
+          "importance": 0.18226633965969086
+        },
+        {
+          "feature": "SNP_I_2713872_C252A_inter_Rv2415c_eis",
+          "importance": 0.04968653619289398
+        },
+        {
+          "feature": "eis_NC_snp",
+          "importance": 0.036437131464481354
+        },
+        {
+          "feature": "SNP_CN_2289099_TG_pncA_K48T",
+          "importance": 0.022395359352231026
+        },
+        {
+          "feature": "SNP_N_1473246_A1401G_rrs",
+          "importance": 0.019605422392487526
+        },
+        {
+          "feature": "SNP_CN_2726737_A545C_D182A_ahpC",
+          "importance": 0.01624191552400589
+        },
+        {
+          "feature": "SNP_CN_414042_CG_iniC_S429W",
+          "importance": 0.0159018374979496
+        },
+        {
+          "feature": "SNP_CN_409770_GC_iniB_G137R",
+          "importance": 0.015091926790773869
+        },
+        {
+          "feature": "SNP_CN_761338_GC_rpoB_R511P",
+          "importance": 0.013218180276453495
+        },
+        {
+          "feature": "SNP_CN_762833_C3027G_S1009R_rpoB",
+          "importance": 0.011968440376222134
+        },
+        {
+          "feature": "SNP_CN_412017_C1180G_Q394E_iniA",
+          "importance": 0.011832665652036667
+        },
+        {
+          "feature": "rpsA_C_snp",
+          "importance": 0.011103588156402111
+        },
+        {
+          "feature": "SNP_CN_2289180_A62C_V21G_pncA",
+          "importance": 0.008297092281281948
+        },
+        {
+          "feature": "INS_F_409772_i410ATCT_iniB_G137G",
+          "importance": 0.008104722015559673
+        },
+        {
+          "feature": "SNP_CN_410244_GC_iniB_V295L",
+          "importance": 0.008059242740273476
+        },
+        {
+          "feature": "katG_F_indel",
+          "importance": 0.007876330986618996
+        },
+        {
+          "feature": "SNP_CN_2726338_T146G_V49G_ahpC",
+          "importance": 0.00667931605130434
+        },
+        {
+          "feature": "SNP_P_1673423_G17T_promoter_fabG1-inhA",
+          "importance": 0.006626452319324017
+        },
+        {
+          "feature": "SNP_N_1475685_T2028C_rrl",
+          "importance": 0.006542804650962353
+        }
+      ]
+    },
+    "AMK": {
+      "drug": "AMK",
+      "n_samples": 1360,
+      "n_susceptible": 233,
+      "n_resistant": 1127,
+      "imbalance_ratio": 0.2067435669920142,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9574218161740695,
+            "std": 0.016833356039403766
+          },
+          "accuracy": {
+            "mean": 0.9522058823529411,
+            "std": 0.009865005783087313
+          },
+          "f1_macro": {
+            "mean": 0.9153389772712194,
+            "std": 0.017751191970312188
+          },
+          "sensitivity": {
+            "mean": 0.9724877089478859,
+            "std": 0.006540771999193468
+          },
+          "specificity": {
+            "mean": 0.8543015726179464,
+            "std": 0.04296944781622163
+          },
+          "threshold_90_sens": 0.8880906701087952,
+          "specificity_at_90_sens": 1.0
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.9645454261822831,
+            "std": 0.015943366373612964
+          },
+          "accuracy": {
+            "mean": 0.9595588235294118,
+            "std": 0.0077118297659569904
+          },
+          "f1_macro": {
+            "mean": 0.9253079128107755,
+            "std": 0.014253068069872596
+          },
+          "sensitivity": {
+            "mean": 0.9875752212389379,
+            "std": 0.005173030258949257
+          },
+          "specificity": {
+            "mean": 0.8243293246993524,
+            "std": 0.032803330665080004
+          },
+          "threshold_90_sens": 0.6223506662995696,
+          "specificity_at_90_sens": 1.0
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9549273415761835,
+            "std": 0.017178725598011965
+          },
+          "accuracy": {
+            "mean": 0.9455882352941176,
+            "std": 0.012820291010413725
+          },
+          "f1_macro": {
+            "mean": 0.9060668414900522,
+            "std": 0.02041084367751168
+          },
+          "sensitivity": {
+            "mean": 0.9627531956735498,
+            "std": 0.013847523611608037
+          },
+          "specificity": {
+            "mean": 0.8627197039777984,
+            "std": 0.025353314920753912
+          },
+          "threshold_90_sens": 0.760487621483085,
+          "specificity_at_90_sens": 0.9957081545064378
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9628337049074158,
+            "std": 0.01792091393060214
+          },
+          "accuracy": {
+            "mean": 0.9595588235294118,
+            "std": 0.00930081664755404
+          },
+          "f1_macro": {
+            "mean": 0.9280191877287326,
+            "std": 0.016239420331609043
+          },
+          "sensitivity": {
+            "mean": 0.9786941986234021,
+            "std": 0.007657117112149599
+          },
+          "specificity": {
+            "mean": 0.8670675300647549,
+            "std": 0.031096094041221677
+          },
+          "threshold_90_sens": 0.8810916104256853,
+          "specificity_at_90_sens": 1.0
+        }
+      },
+      "top_features": [
+        {
+          "feature": "SNP_N_1473246_A1401G_rrs",
+          "importance": 0.2131359726190567
+        },
+        {
+          "feature": "SNP_CN_4326341_GA_ethA_P378L",
+          "importance": 0.06131882593035698
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.044824615120887756
+        },
+        {
+          "feature": "SNP_CN_4326333_C1141G_A381P_ethA",
+          "importance": 0.035645466297864914
+        },
+        {
+          "feature": "SNP_CN_761110_A1304T_D435V_rpoB",
+          "importance": 0.029452672228217125
+        },
+        {
+          "feature": "rrl_F_indel",
+          "importance": 0.025026405230164528
+        },
+        {
+          "feature": "SNP_CN_2155167_GT_katG_S315R",
+          "importance": 0.022859426215291023
+        },
+        {
+          "feature": "alr_C_snp",
+          "importance": 0.01772340200841427
+        },
+        {
+          "feature": "SNP_CN_4247574_A1061C_D354A_embB",
+          "importance": 0.017658736556768417
+        },
+        {
+          "feature": "SNP_N_1472359_A514C_rrs",
+          "importance": 0.017244113609194756
+        },
+        {
+          "feature": "ahpC_NC_snp",
+          "importance": 0.017147373408079147
+        },
+        {
+          "feature": "gid_F_indel",
+          "importance": 0.016545210033655167
+        },
+        {
+          "feature": "SNP_CN_761338_GC_rpoB_R511P",
+          "importance": 0.014370552264153957
+        },
+        {
+          "feature": "SNP_CN_4247729_G1216A_G406S_embB",
+          "importance": 0.01296121533960104
+        },
+        {
+          "feature": "SNP_I_2713795_C329T_inter_Rv2415c_eis",
+          "importance": 0.012741867452859879
+        },
+        {
+          "feature": "SNP_CN_1673449_A10C_T4P_fabG1",
+          "importance": 0.012537188827991486
+        },
+        {
+          "feature": "INS_P_3074521_G.115_thyA",
+          "importance": 0.011527073569595814
+        },
+        {
+          "feature": "SNP_CN_409569_GA_iniB_A70T",
+          "importance": 0.011494354344904423
+        },
+        {
+          "feature": "SNP_I_2713872_C252A_inter_Rv2415c_eis",
+          "importance": 0.011373184621334076
+        },
+        {
+          "feature": "rrs_NF_indel",
+          "importance": 0.010800130665302277
+        }
+      ]
+    },
+    "MOXI": {
+      "drug": "MOXI",
+      "n_samples": 1337,
+      "n_susceptible": 267,
+      "n_resistant": 1070,
+      "imbalance_ratio": 0.24953271028037383,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9115702371389199,
+            "std": 0.024578095599219245
+          },
+          "accuracy": {
+            "mean": 0.8758371066018222,
+            "std": 0.01450310926124451
+          },
+          "f1_macro": {
+            "mean": 0.8098412906517776,
+            "std": 0.022908743091981886
+          },
+          "sensitivity": {
+            "mean": 0.9149532710280374,
+            "std": 0.010407036192205645
+          },
+          "specificity": {
+            "mean": 0.718867924528302,
+            "std": 0.045531021923093655
+          },
+          "threshold_90_sens": 0.6911161541938782,
+          "specificity_at_90_sens": 0.9962546816479401
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.911695304897562,
+            "std": 0.012108764724591903
+          },
+          "accuracy": {
+            "mean": 0.8900385711889989,
+            "std": 0.012092188662343139
+          },
+          "f1_macro": {
+            "mean": 0.8073037319472235,
+            "std": 0.025150416413594792
+          },
+          "sensitivity": {
+            "mean": 0.9644859813084112,
+            "std": 0.010065728611466356
+          },
+          "specificity": {
+            "mean": 0.5913347309573724,
+            "std": 0.056487876449064695
+          },
+          "threshold_90_sens": 0.5210040377781882,
+          "specificity_at_90_sens": 1.0
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9032344546980413,
+            "std": 0.029310743392002358
+          },
+          "accuracy": {
+            "mean": 0.8526189278327465,
+            "std": 0.02485108747200204
+          },
+          "f1_macro": {
+            "mean": 0.79044460578569,
+            "std": 0.03555072892788205
+          },
+          "sensitivity": {
+            "mean": 0.8728971962616822,
+            "std": 0.01656078985670034
+          },
+          "specificity": {
+            "mean": 0.7711390635918938,
+            "std": 0.06100993134687247
+          },
+          "threshold_90_sens": 0.5322232807171909,
+          "specificity_at_90_sens": 0.9325842696629213
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9184610461281242,
+            "std": 0.02080996554268553
+          },
+          "accuracy": {
+            "mean": 0.8788333612834703,
+            "std": 0.020137119159672055
+          },
+          "f1_macro": {
+            "mean": 0.8138232285355194,
+            "std": 0.03143707425282594
+          },
+          "sensitivity": {
+            "mean": 0.9177570093457945,
+            "std": 0.01435728177171702
+          },
+          "specificity": {
+            "mean": 0.7226415094339622,
+            "std": 0.06184324499336417
+          },
+          "threshold_90_sens": 0.6577473946973753,
+          "specificity_at_90_sens": 0.9962546816479401
+        }
+      },
+      "top_features": [
+        {
+          "feature": "SNP_I_2713872_C252A_inter_Rv2415c_eis",
+          "importance": 0.060512740164995193
+        },
+        {
+          "feature": "eis_NC_snp",
+          "importance": 0.052994877099990845
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.04426860809326172
+        },
+        {
+          "feature": "SNP_CN_409770_GC_iniB_G137R",
+          "importance": 0.04297304525971413
+        },
+        {
+          "feature": "SNP_CN_7582_ACAG281-284GCAC_DS94-95GT_gyrA",
+          "importance": 0.033731114119291306
+        },
+        {
+          "feature": "SNP_CN_7582_AG_gyrA_D94G",
+          "importance": 0.03114822693169117
+        },
+        {
+          "feature": "SNP_N_1473911_G254A_rrl",
+          "importance": 0.026882901787757874
+        },
+        {
+          "feature": "SNP_CN_2726338_T146G_V49G_ahpC",
+          "importance": 0.023665795102715492
+        },
+        {
+          "feature": "SNP_CN_7570_C269T_A90V_gyrA",
+          "importance": 0.020840324461460114
+        },
+        {
+          "feature": "SNP_CN_7542_AT_gyrA_M81L",
+          "importance": 0.019098248332738876
+        },
+        {
+          "feature": "SNP_CN_7582_AC_gyrA_D94A",
+          "importance": 0.016018016263842583
+        },
+        {
+          "feature": "SNP_N_1473246_A1401G_rrs",
+          "importance": 0.015124130994081497
+        },
+        {
+          "feature": "SNP_N_1473343_G1498T_rrs",
+          "importance": 0.014875873923301697
+        },
+        {
+          "feature": "thyA_NC_snp",
+          "importance": 0.013870880007743835
+        },
+        {
+          "feature": "SNP_CN_4247431_G918C_M306I_embB",
+          "importance": 0.013694356195628643
+        },
+        {
+          "feature": "SNP_CN_762833_C3027G_S1009R_rpoB",
+          "importance": 0.01190183311700821
+        },
+        {
+          "feature": "SNP_CN_4248725_T2212G_S738A_embB",
+          "importance": 0.011869140900671482
+        },
+        {
+          "feature": "ahpC_NC_snp",
+          "importance": 0.01167884562164545
+        },
+        {
+          "feature": "SNP_CN_2155276_CT_katG_G279D",
+          "importance": 0.011369633488357067
+        },
+        {
+          "feature": "SNP_CN_761277_A1471T_I491F_rpoB",
+          "importance": 0.011014163494110107
+        }
+      ]
+    },
+    "OFLX": {
+      "drug": "OFLX",
+      "n_samples": 690,
+      "n_susceptible": 87,
+      "n_resistant": 603,
+      "imbalance_ratio": 0.14427860696517414,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.925494022218621,
+            "std": 0.029248446728412265
+          },
+          "accuracy": {
+            "mean": 0.8898550724637679,
+            "std": 0.0028985507246376495
+          },
+          "f1_macro": {
+            "mean": 0.7796023795527416,
+            "std": 0.021240778743357395
+          },
+          "sensitivity": {
+            "mean": 0.9120936639118458,
+            "std": 0.01245537077667082
+          },
+          "specificity": {
+            "mean": 0.734640522875817,
+            "std": 0.10454247855232524
+          },
+          "threshold_90_sens": 0.6585937738418579,
+          "specificity_at_90_sens": 0.9885057471264368
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.9280337690631809,
+            "std": 0.028651659604804862
+          },
+          "accuracy": {
+            "mean": 0.9057971014492754,
+            "std": 0.01714805734231772
+          },
+          "f1_macro": {
+            "mean": 0.7136768662286006,
+            "std": 0.07122830146209648
+          },
+          "sensitivity": {
+            "mean": 0.9834159779614324,
+            "std": 0.014845801338848575
+          },
+          "specificity": {
+            "mean": 0.36928104575163395,
+            "std": 0.15862302090864833
+          },
+          "threshold_90_sens": 0.7144805930228273,
+          "specificity_at_90_sens": 1.0
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.930070806100218,
+            "std": 0.01574182199380047
+          },
+          "accuracy": {
+            "mean": 0.8956521739130434,
+            "std": 0.00738988335303302
+          },
+          "f1_macro": {
+            "mean": 0.796847353149263,
+            "std": 0.01877814835288823
+          },
+          "sensitivity": {
+            "mean": 0.9104545454545455,
+            "std": 0.014176652219230427
+          },
+          "specificity": {
+            "mean": 0.792156862745098,
+            "std": 0.0816496580927726
+          },
+          "threshold_90_sens": 0.6330271335049621,
+          "specificity_at_90_sens": 0.9885057471264368
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.938422955040602,
+            "std": 0.024697834755398336
+          },
+          "accuracy": {
+            "mean": 0.9072463768115941,
+            "std": 0.00961340518943594
+          },
+          "f1_macro": {
+            "mean": 0.8024677233870214,
+            "std": 0.017107279424214382
+          },
+          "sensitivity": {
+            "mean": 0.9353443526170798,
+            "std": 0.01757725798236548
+          },
+          "specificity": {
+            "mean": 0.7124183006535947,
+            "std": 0.07383017645198921
+          },
+          "threshold_90_sens": 0.7115370915522442,
+          "specificity_at_90_sens": 1.0
+        }
+      },
+      "top_features": [
+        {
+          "feature": "SNP_CN_761277_A1471T_I491F_rpoB",
+          "importance": 0.13196097314357758
+        },
+        {
+          "feature": "DEL_CF_4408101_d102C_34_gid",
+          "importance": 0.1000024750828743
+        },
+        {
+          "feature": "SNP_N_1473911_G254A_rrl",
+          "importance": 0.07283303886651993
+        },
+        {
+          "feature": "eis_NC_snp",
+          "importance": 0.07215707749128342
+        },
+        {
+          "feature": "SNP_CN_7582_ACAG281-284GCAC_DS94-95GT_gyrA",
+          "importance": 0.0672917515039444
+        },
+        {
+          "feature": "SNP_CN_762833_C3027G_S1009R_rpoB",
+          "importance": 0.05248076468706131
+        },
+        {
+          "feature": "SNP_CN_9304_G2003A_G668D_gyrA",
+          "importance": 0.04130890965461731
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.030714308843016624
+        },
+        {
+          "feature": "SNP_CN_7582_AC_gyrA_D94A",
+          "importance": 0.024135593324899673
+        },
+        {
+          "feature": "SNP_CN_4326996_GC_ethA_P160A",
+          "importance": 0.024020826444029808
+        },
+        {
+          "feature": "SNP_CN_2155167_GT_katG_S315R",
+          "importance": 0.0239851176738739
+        },
+        {
+          "feature": "SNP_I_2713872_C252A_inter_Rv2415c_eis",
+          "importance": 0.02053266204893589
+        },
+        {
+          "feature": "SNP_P_3074520_CG.116_thyA",
+          "importance": 0.016457509249448776
+        },
+        {
+          "feature": "SNP_CN_7570_C269T_A90V_gyrA",
+          "importance": 0.014170369133353233
+        },
+        {
+          "feature": "gyrA_C_snp",
+          "importance": 0.01331509929150343
+        },
+        {
+          "feature": "SNP_CN_7582_AG_gyrA_D94G",
+          "importance": 0.012705493718385696
+        },
+        {
+          "feature": "SNP_CN_7585_G284C_S95T_gyrA",
+          "importance": 0.012701624073088169
+        },
+        {
+          "feature": "pncA_F_indel",
+          "importance": 0.010914072394371033
+        },
+        {
+          "feature": "SNP_CN_4242075_G2213A_R738Q_embC",
+          "importance": 0.01059756614267826
+        },
+        {
+          "feature": "SNP_CN_3074465_GC_thyA_P3A",
+          "importance": 0.010115663520991802
+        }
+      ]
+    },
+    "KAN": {
+      "drug": "KAN",
+      "n_samples": 1283,
+      "n_susceptible": 270,
+      "n_resistant": 1013,
+      "imbalance_ratio": 0.2665350444225074,
+      "models": {
+        "XGBoost": {
+          "auroc": {
+            "mean": 0.9103855623657603,
+            "std": 0.021677338137477194
+          },
+          "accuracy": {
+            "mean": 0.8986533317120623,
+            "std": 0.012979220822248805
+          },
+          "f1_macro": {
+            "mean": 0.8440578041630804,
+            "std": 0.02284228303818367
+          },
+          "sensitivity": {
+            "mean": 0.9427400868165634,
+            "std": 0.007431304577461569
+          },
+          "specificity": {
+            "mean": 0.7333333333333334,
+            "std": 0.05809032274577081
+          },
+          "threshold_90_sens": 0.767163097858429,
+          "specificity_at_90_sens": 0.9888888888888889
+        },
+        "RandomForest": {
+          "auroc": {
+            "mean": 0.9213277731714058,
+            "std": 0.01308783813630768
+          },
+          "accuracy": {
+            "mean": 0.9157921935797665,
+            "std": 0.01698261307569136
+          },
+          "f1_macro": {
+            "mean": 0.8562502384116157,
+            "std": 0.03368004801663559
+          },
+          "sensitivity": {
+            "mean": 0.9851875335316784,
+            "std": 0.008855789976212305
+          },
+          "specificity": {
+            "mean": 0.6555555555555557,
+            "std": 0.07733560376970779
+          },
+          "threshold_90_sens": 0.7357475212802448,
+          "specificity_at_90_sens": 0.9925925925925926
+        },
+        "LogisticRegression": {
+          "auroc": {
+            "mean": 0.9105154439910329,
+            "std": 0.015987805775805636
+          },
+          "accuracy": {
+            "mean": 0.8643573686770427,
+            "std": 0.014460563351263962
+          },
+          "f1_macro": {
+            "mean": 0.8051142014060829,
+            "std": 0.023646081628581832
+          },
+          "sensitivity": {
+            "mean": 0.8953616543920402,
+            "std": 0.014430800527272419
+          },
+          "specificity": {
+            "mean": 0.7481481481481482,
+            "std": 0.06988134171893781
+          },
+          "threshold_90_sens": 0.5553862616050731,
+          "specificity_at_90_sens": 0.9407407407407408
+        },
+        "Ensemble": {
+          "auroc": {
+            "mean": 0.9230691624170626,
+            "std": 0.012892278723633119
+          },
+          "accuracy": {
+            "mean": 0.9041099221789883,
+            "std": 0.011101686991993223
+          },
+          "f1_macro": {
+            "mean": 0.8498461677249483,
+            "std": 0.021541097565979054
+          },
+          "sensitivity": {
+            "mean": 0.9516314685655758,
+            "std": 0.010064290708807554
+          },
+          "specificity": {
+            "mean": 0.725925925925926,
+            "std": 0.06768765512035947
+          },
+          "threshold_90_sens": 0.6896938890067607,
+          "specificity_at_90_sens": 0.9888888888888889
+        }
+      },
+      "top_features": [
+        {
+          "feature": "SNP_N_1473246_A1401G_rrs",
+          "importance": 0.12532047927379608
+        },
+        {
+          "feature": "SNP_CN_2714366_C967A_V323L_eis",
+          "importance": 0.07563497871160507
+        },
+        {
+          "feature": "SNP_CN_412017_C1180G_Q394E_iniA",
+          "importance": 0.033031247556209564
+        },
+        {
+          "feature": "SNP_CN_4326341_GA_ethA_P378L",
+          "importance": 0.026919471099972725
+        },
+        {
+          "feature": "SNP_CN_761110_A1304T_D435V_rpoB",
+          "importance": 0.02584182284772396
+        },
+        {
+          "feature": "eis_NC_snp",
+          "importance": 0.0234054047614336
+        },
+        {
+          "feature": "thyA_NC_snp",
+          "importance": 0.022178860381245613
+        },
+        {
+          "feature": "DEL_F_4408101_d101C_gid_G34G",
+          "importance": 0.016184957697987556
+        },
+        {
+          "feature": "SNP_CN_6140_G1018T_V340L_gyrB",
+          "importance": 0.0121847502887249
+        },
+        {
+          "feature": "SNP_CN_409770_GC_iniB_G137R",
+          "importance": 0.011967469938099384
+        },
+        {
+          "feature": "INS_F_409772_i410ATCT_iniB_G137G",
+          "importance": 0.011892649345099926
+        },
+        {
+          "feature": "SNP_CN_2726338_T146G_V49G_ahpC",
+          "importance": 0.011106244288384914
+        },
+        {
+          "feature": "SNP_CN_762833_C3027G_S1009R_rpoB",
+          "importance": 0.011009073816239834
+        },
+        {
+          "feature": "SNP_N_1475212_A1555G_rrl",
+          "importance": 0.010290787555277348
+        },
+        {
+          "feature": "SNP_N_1475685_T2028C_rrl",
+          "importance": 0.01008819043636322
+        },
+        {
+          "feature": "SNP_CN_761880_GA_rpoB_A692T",
+          "importance": 0.010079963132739067
+        },
+        {
+          "feature": "iniC_C_snp",
+          "importance": 0.009906569495797157
+        },
+        {
+          "feature": "ethA_F_indel",
+          "importance": 0.009793823584914207
+        },
+        {
+          "feature": "SNP_CN_2155276_CT_katG_G279D",
+          "importance": 0.009172394871711731
+        },
+        {
+          "feature": "SNP_CN_761338_GC_rpoB_R511P",
+          "importance": 0.008997972123324871
+        }
+      ]
+    }
+  },
+  "class_distributions": {
+    "RIF": {
+      "-1": 58,
+      "0": 1278,
+      "1": 2057
+    },
+    "INH": {
+      "-1": 37,
+      "0": 1524,
+      "1": 1832
+    },
+    "PZA": {
+      "-1": 452,
+      "0": 695,
+      "1": 2246
+    },
+    "EMB": {
+      "-1": 74,
+      "0": 973,
+      "1": 2346
+    },
+    "STR": {
+      "-1": 1312,
+      "0": 1020,
+      "1": 1061
+    },
+    "CIP": {
+      "-1": 2214,
+      "0": 237,
+      "1": 942
+    },
+    "CAP": {
+      "-1": 2054,
+      "0": 587,
+      "1": 752
+    },
+    "AMK": {
+      "-1": 2033,
+      "0": 233,
+      "1": 1127
+    },
+    "MOXI": {
+      "-1": 2056,
+      "0": 267,
+      "1": 1070
+    },
+    "OFLX": {
+      "-1": 2703,
+      "0": 87,
+      "1": 603
+    },
+    "KAN": {
+      "-1": 2110,
+      "0": 270,
+      "1": 1013
+    }
+  }
+}
