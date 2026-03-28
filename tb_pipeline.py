@@ -85,22 +85,39 @@ def prepare_data(df_X, df_y, drug):
     return X, y, feature_names, n_susceptible, n_resistant, imbalance_ratio
 
 
-def create_models(imbalance_ratio):
-    """Create models with appropriate class weighting."""
+# Per-drug tuned hyperparameters for high-variance drugs (MOXI, KAN, OFLX).
+# Derived from 81-config XGB grid + 9-config RF grid with 5-fold CV.
+# All other drugs use defaults — their performance is already clinical-grade.
+DRUG_XGB_PARAMS = {
+    'MOXI': {'n_estimators': 500, 'max_depth': 3, 'learning_rate': 0.05, 'subsample': 0.8},
+    'KAN':  {'n_estimators': 100, 'max_depth': 6, 'learning_rate': 0.05, 'subsample': 0.8},
+    'OFLX': {'n_estimators': 200, 'max_depth': 3, 'learning_rate': 0.05, 'subsample': 1.0},
+}
+DRUG_RF_PARAMS = {
+    'MOXI': {'n_estimators': 500,  'max_depth': None},
+    'KAN':  {'n_estimators': 1000, 'max_depth': 20},
+    'OFLX': {'n_estimators': 1000, 'max_depth': None},
+}
+
+
+def create_models(imbalance_ratio, drug=None):
+    """Create models with appropriate class weighting.
+
+    Uses per-drug tuned hyperparameters for MOXI, KAN, OFLX;
+    falls back to defaults for all other drugs.
+    """
+    xgb_params = DRUG_XGB_PARAMS.get(drug, {'n_estimators': 200, 'max_depth': 6,
+                                             'learning_rate': 0.1, 'subsample': 0.8})
+    rf_params = DRUG_RF_PARAMS.get(drug, {'n_estimators': 500, 'max_depth': 20})
+
     models = {
         'XGBoost': xgb.XGBClassifier(
-            learning_rate=0.1,
-            max_depth=6,
-            n_estimators=200,
-            subsample=0.8,
-            colsample_bytree=0.8,
-            eval_metric='auc',
+            **xgb_params,
             random_state=RANDOM_STATE,
             scale_pos_weight=imbalance_ratio
         ),
         'RandomForest': RandomForestClassifier(
-            n_estimators=500,
-            max_depth=20,
+            **rf_params,
             class_weight='balanced',
             random_state=RANDOM_STATE,
             n_jobs=-1
@@ -209,8 +226,8 @@ def train_and_evaluate_drug(df_X, df_y, drug, cv):
     if len(y) < 50:
         print(f"WARNING: Very few samples for {drug}. Results may be unreliable.")
 
-    # Create models
-    models = create_models(imbalance_ratio)
+    # Create models (uses per-drug tuned params for MOXI, KAN, OFLX)
+    models = create_models(imbalance_ratio, drug=drug)
 
     # Store results
     drug_results = {
